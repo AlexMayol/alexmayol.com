@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import { routes, type Lang } from '../../i18n/routes';
+import { ui } from '../../i18n/ui';
+import { getPosts, postUrl, formatDate } from '../../lib/posts';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const posts = await getPosts(lang);
+---
+
+<Base
+  lang={lang}
+  title={t.meta.thoughts.title}
+  description={t.meta.thoughts.description}
+  alternate={routes.thoughts}
+>
+  <section class="mx-auto max-w-3xl px-6 py-16">
+    <h1 class="font-display text-5xl font-semibold tracking-tight">{t.thoughts.heading}</h1>
+    <p class="mt-4 max-w-xl text-lg text-ink/70">{t.thoughts.intro}</p>
+
+    {posts.length === 0 && <p class="mt-14 text-ink/60">{t.thoughts.empty}</p>}
+
+    <ul class="mt-14 space-y-10">
+      {posts.map((post) => (
+        <li>
+          <article>
+            <p class="text-sm tracking-wide text-ink/50 uppercase">{formatDate(post, lang)}</p>
+            <h2 class="mt-1 font-display text-2xl font-semibold">
+              <a href={postUrl(post)} class="hover:text-accent">{post.data.title}</a>
+            </h2>
+            <p class="mt-2 text-ink/70">{post.data.description}</p>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
