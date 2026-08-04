@@ -102,8 +102,9 @@ Static output, no SSR. Route table (single source of truth in
   freelancing), initialized on `astro:page-load`, killed/re-created across
   view transitions.
 - Everything disabled under `prefers-reduced-motion: reduce`.
-- Astro `<ClientRouter />` view transitions; header persists across
-  navigations.
+- Astro `<ClientRouter />` view transitions. The header re-renders on each
+  navigation (no `transition:persist` — the language-toggle URL changes per
+  page); the default cross-fade keeps it visually stable.
 - Pages without animations ship no JS beyond Astro's small view-transition
   router.
 - Target: Lighthouse 100 across Performance / A11y / Best Practices / SEO on
