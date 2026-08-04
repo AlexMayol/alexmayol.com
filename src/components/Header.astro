@@ -1,0 +1,31 @@
+---
+import { routes, otherLang, type Lang } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+import { SITE } from '../data/site';
+
+interface Props {
+  lang: Lang;
+  alternate: { en: string; es: string };
+}
+
+const { lang, alternate } = Astro.props;
+const t = ui[lang].nav;
+const other = otherLang(lang);
+---
+
+<header class="sticky top-0 z-10 border-b border-ink/10 bg-paper/90 backdrop-blur">
+  <nav class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-6 py-4" aria-label="Main">
+    <a href={routes.home[lang]} class="font-display text-lg font-semibold">{SITE.displayName}</a>
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+      <a href={routes.projects[lang]} class="hover:text-accent">{t.projects}</a>
+      <a href={routes.freelancing[lang]} class="hover:text-accent">{t.freelancing}</a>
+      <a href={routes.thoughts[lang]} class="hover:text-accent">{t.thoughts}</a>
+      <a href={routes.contact[lang]} class="hover:text-accent">{t.contact}</a>
+      <a
+        href={alternate[other]}
+        class="rounded border border-ink/20 px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:border-accent hover:text-accent"
+        aria-label={other === 'es' ? 'Ver esta página en español' : 'View this page in English'}
+      >{other}</a>
+    </div>
+  </nav>
+</header>

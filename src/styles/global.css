@@ -1,1 +1,9 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-paper: #FAF8F5;
+  --color-ink: #1C1B1A;
+  --color-accent: #C2410C;
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+}

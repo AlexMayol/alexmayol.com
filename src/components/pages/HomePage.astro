@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import { routes, type Lang } from '../../i18n/routes';
+import { ui } from '../../i18n/ui';
+import { SITE, personJsonLd } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<Base
+  lang={lang}
+  title={t.meta.home.title}
+  description={t.meta.home.description}
+  alternate={routes.home}
+  jsonLd={personJsonLd}
+>
+  <section class="mx-auto grid min-h-[70dvh] max-w-3xl place-content-center px-6 text-center">
+    <h1 class="font-display text-5xl font-semibold tracking-tight sm:text-6xl">{SITE.displayName}</h1>
+    <p class="mt-4 text-lg text-accent">{t.home.tagline}</p>
+  </section>
+</Base>
