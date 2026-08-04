@@ -26,7 +26,7 @@ const jobs = experience[lang];
       {jobs.map((job) => (
         <li data-reveal class="relative">
           <span class="absolute top-2 -left-[2.45rem] size-3 rounded-full bg-accent" aria-hidden="true"></span>
-          <p class="text-sm tracking-wide text-ink/50 uppercase">
+          <p class="text-sm tracking-wide text-ink/65 uppercase">
             {job.dates}{job.note && ` · ${job.note}`}
           </p>
           <h2 class="mt-1 font-display text-2xl font-semibold">
@@ -40,7 +40,7 @@ const jobs = experience[lang];
           </ul>
           <ul class="mt-4 flex flex-wrap gap-2">
             {job.skills.map((s) => (
-              <li class="rounded-full border border-ink/15 px-3 py-0.5 text-xs text-ink/60">{s}</li>
+              <li class="rounded-full border border-ink/15 px-3 py-0.5 text-xs text-ink/65">{s}</li>
             ))}
           </ul>
         </li>
