@@ -33,7 +33,8 @@ const posts = await getPosts(lang);
               {formatDate(post, lang)} · {readingTime(post)} {t.log.minRead}
             </p>
             <h2
-              transition:name={`post-title-${post.data.translationKey}`}
+              data-vt-title
+              style={`--vt-title: post-title-${post.data.translationKey}`}
               class="mt-1 font-display text-2xl font-semibold"
             >
               <a href={postUrl(post)} class="hover:text-accent">{post.data.title}</a>

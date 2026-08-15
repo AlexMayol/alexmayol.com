@@ -99,25 +99,36 @@ const abs = (path: string) => new URL(path, Astro.site).href;
       const order = (path: string) =>
         prefixes.find(([prefix]) => norm(path).startsWith(prefix))?.[1] ?? 0;
 
-      document.addEventListener('astro:before-preparation', (event) => {
-        const e = event as TransitionBeforePreparationEvent;
-        e.direction = order(e.to.pathname) < order(e.from.pathname) ? 'back' : 'forward';
-      });
-
-      // Post pages zoom+fade instead of sliding: tag the incoming document so
-      // the html[data-vt=…] rules in global.css out-specify the slide on main.
+      // Post pages zoom+fade instead of sliding, and post titles morph:
+      // both documents get tagged with data-vt so the html[data-vt=…] rules
+      // in global.css out-specify the slide on main and name the titles.
       const postPrefixes = [routes.log.en, routes.log.es];
       const isPost = (path: string) => {
         const p = norm(path);
         return postPrefixes.some((prefix) => p.startsWith(prefix) && p.length > prefix.length);
       };
+      const vtKind = (fromPath: string, toPath: string) => {
+        const from = isPost(fromPath);
+        const to = isPost(toPath);
+        return to && !from ? 'post-enter' : from && !to ? 'post-exit' : undefined;
+      };
+      const tag = (root: HTMLElement, kind: string | undefined) => {
+        if (kind) root.dataset.vt = kind;
+        else delete root.dataset.vt;
+      };
+
+      document.addEventListener('astro:before-preparation', (event) => {
+        const e = event as TransitionBeforePreparationEvent;
+        e.direction = order(e.to.pathname) < order(e.from.pathname) ? 'back' : 'forward';
+        // Tag the live document HERE: the outgoing snapshots are captured
+        // before astro:before-swap fires, and titles only carry their
+        // view-transition-name while the document is tagged.
+        tag(document.documentElement, vtKind(e.from.pathname, e.to.pathname));
+      });
 
       document.addEventListener('astro:before-swap', (event) => {
         const e = event as TransitionBeforeSwapEvent;
-        const from = isPost(e.from.pathname);
-        const to = isPost(e.to.pathname);
-        if (to && !from) e.newDocument.documentElement.dataset.vt = 'post-enter';
-        else if (from && !to) e.newDocument.documentElement.dataset.vt = 'post-exit';
+        tag(e.newDocument.documentElement, vtKind(e.from.pathname, e.to.pathname));
       });
     </script>
   </body>
