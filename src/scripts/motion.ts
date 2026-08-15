@@ -8,10 +8,24 @@ document.addEventListener('astro:before-swap', () => {
   ScrollTrigger.getAll().forEach((t) => t.kill());
 });
 
+// Single dispatcher: pages just `import '../scripts/motion'`. Registering the
+// page-load listener here (module runs once) instead of per-page scripts —
+// two pages' identical listeners would each run gsap.from() on the same
+// elements, and the second from() captures the first one's hidden state as
+// its end value, leaving content stuck invisible.
+document.addEventListener('astro:page-load', () => {
+  if (document.querySelector('[data-reveal]')) initScrollReveal();
+  if (document.querySelector('[data-tilt]')) {
+    initStagger();
+    initFloat();
+    initTilt();
+  }
+});
+
 const reduced = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export function initScrollReveal() {
+function initScrollReveal() {
   if (reduced()) return;
   document.querySelectorAll('[data-reveal]').forEach((el) => {
     gsap.from(el, {
@@ -24,7 +38,7 @@ export function initScrollReveal() {
   });
 }
 
-export function initStagger() {
+function initStagger() {
   if (reduced()) return;
   document.querySelectorAll('[data-stagger]').forEach((group) => {
     gsap.from(group.children, {
@@ -37,7 +51,7 @@ export function initStagger() {
   });
 }
 
-export function initFloat() {
+function initFloat() {
   if (reduced()) return;
   document.querySelectorAll('[data-float]').forEach((el, i) => {
     gsap.to(el, {
@@ -51,7 +65,7 @@ export function initFloat() {
   });
 }
 
-export function initTilt() {
+function initTilt() {
   if (reduced()) return;
   document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
     card.addEventListener('pointermove', (e) => {

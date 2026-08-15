@@ -83,12 +83,5 @@ const cards = [
 </Base>
 
 <script>
-  import { initTilt, initFloat, initStagger } from '../../scripts/motion';
-
-  document.addEventListener('astro:page-load', () => {
-    if (!document.querySelector('[data-tilt]')) return;
-    initStagger();
-    initFloat();
-    initTilt();
-  });
+  import '../../scripts/motion';
 </script>

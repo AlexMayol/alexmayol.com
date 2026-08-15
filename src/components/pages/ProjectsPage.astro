@@ -50,9 +50,5 @@ const jobs = experience[lang];
 </Base>
 
 <script>
-  import { initScrollReveal } from '../../scripts/motion';
-
-  document.addEventListener('astro:page-load', () => {
-    if (document.querySelector('[data-reveal]')) initScrollReveal();
-  });
+  import '../../scripts/motion';
 </script>
