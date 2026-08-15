@@ -5,6 +5,8 @@ date: 2026-08-15
 translationKey: product-engineering
 tags: [product, engineering, software]
 draft: true
+cover: ../_images/product-engineering-cover.jpg
+coverAlt: Ilustración de un equipo construyendo y programando un robot gigante frente a una pantalla con código
 ---
 
 # De Software Engineer a Product Engineer
