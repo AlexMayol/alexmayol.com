@@ -6,6 +6,26 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import { SITE } from '../data/site';
 import type { Lang } from '../i18n/routes';
+import type { TransitionAnimation, TransitionDirectionalAnimations } from 'astro';
+
+// Astro's stock slide ends too abruptly; same slide with easeOutExpo.
+// Keyframes live in global.css.
+const anim = (name: string): TransitionAnimation => ({
+  name,
+  duration: '300ms',
+  easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  fillMode: 'both',
+});
+const slide: TransitionDirectionalAnimations = {
+  forwards: {
+    old: [anim('vtFadeOut'), anim('vtSlideToLeft')],
+    new: [anim('vtFadeIn'), anim('vtSlideFromRight')],
+  },
+  backwards: {
+    old: [anim('vtFadeOut'), anim('vtSlideToRight')],
+    new: [anim('vtFadeIn'), anim('vtSlideFromLeft')],
+  },
+};
 
 interface Props {
   lang: Lang;
@@ -50,7 +70,7 @@ const abs = (path: string) => new URL(path, Astro.site).href;
   </head>
   <body class="min-h-dvh bg-paper font-sans text-ink antialiased">
     <Header lang={lang} alternate={alternate} />
-    <main transition:animate="slide"><slot /></main>
+    <main transition:animate={slide}><slot /></main>
     <script>
       import type { TransitionBeforePreparationEvent } from 'astro:transitions/client';
       import { routes } from '../i18n/routes';

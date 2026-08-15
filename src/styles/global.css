@@ -33,3 +33,36 @@
     transform: translateY(-14px) rotate(4deg);
   }
 }
+
+/* View-transition slide keyframes (referenced from Base.astro's
+   transition:animate config). */
+@keyframes vtFadeOut {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vtFadeIn {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes vtSlideToLeft {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes vtSlideFromRight {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes vtSlideToRight {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes vtSlideFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+}
