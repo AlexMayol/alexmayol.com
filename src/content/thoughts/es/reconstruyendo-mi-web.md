@@ -1,5 +1,5 @@
 ---
-title: Reconstruyendo mi web con Astro
+title: De Software Engineer a Product Engineer: el futuro 
 description: Por qué elegí Astro, salida estática y JavaScript plano para la nueva alexmayol.com.
 date: 2026-08-04
 translationKey: rebuilding-my-site
