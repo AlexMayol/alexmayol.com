@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { routes, type Lang } from '../../i18n/routes';
+import { ui } from '../../i18n/ui';
+import { getPosts, postUrl, formatDate, readingTime } from '../../lib/posts';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const posts = await getPosts(lang);
+---
+
+<Base
+  lang={lang}
+  title={t.meta.log.title}
+  description={t.meta.log.description}
+  alternate={routes.log}
+>
+  <section class="mx-auto max-w-3xl px-6 py-16">
+    <h1 class="font-display text-5xl font-semibold tracking-tight">{t.log.heading}</h1>
+    <p class="mt-4 max-w-xl text-lg text-ink/70">{t.log.intro}</p>
+
+    {posts.length === 0 && <p class="mt-14 text-ink/65">{t.log.empty}</p>}
+
+    <ul class="mt-14 space-y-10">
+      {posts.map((post) => (
+        <li>
+          <article class="flex items-start justify-between gap-6">
+            <div class="min-w-0">
+              <p
+                data-vt-morph
+                style={`--vt-name: post-date-${post.data.translationKey}`}
+                class="text-sm tracking-wide text-ink/65 uppercase"
+              >
+                {formatDate(post, lang)} · {readingTime(post)} {t.log.minRead}
+              </p>
+              <h2
+                data-vt-morph
+                style={`--vt-name: post-title-${post.data.translationKey}`}
+                class="mt-1 font-display text-2xl font-semibold"
+              >
+                <a href={postUrl(post)} class="hover:text-accent">{post.data.title}</a>
+              </h2>
+              <p class="mt-2 text-ink/70">{post.data.description}</p>
+              {post.data.tags.length > 0 && (
+                <p
+                  data-vt-morph
+                  style={`--vt-name: post-tags-${post.data.translationKey}`}
+                  class="mt-3 flex flex-wrap gap-x-3 text-sm text-accent"
+                >
+                  {post.data.tags.map((tag) => (
+                    <span>#{tag}</span>
+                  ))}
+                </p>
+              )}
+            </div>
+            {(post.data.cover || post.data.coverVideo) && (
+              <a href={postUrl(post)} tabindex="-1" aria-hidden="true" class="shrink-0">
+                {post.data.cover && (
+                  <Image
+                    src={post.data.cover}
+                    alt=""
+                    widths={[320, 640]}
+                    sizes="(min-width: 640px) 10rem, 7rem"
+                    class="aspect-[3/2] w-28 rounded-xl object-cover sm:w-40"
+                    data-vt-morph
+                    style={`--vt-name: post-cover-${post.data.translationKey}`}
+                  />
+                )}
+                {post.data.coverVideo && (
+                  <video
+                    src={post.data.coverVideo}
+                    class="aspect-[3/2] w-28 rounded-xl object-cover sm:w-40"
+                    muted
+                    playsinline
+                    preload="metadata"
+                    data-vt-morph
+                    style={`--vt-name: post-cover-${post.data.translationKey}`}
+                  />
+                )}
+              </a>
+            )}
+          </article>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

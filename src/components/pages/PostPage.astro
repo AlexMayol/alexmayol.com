@@ -1,0 +1,121 @@
+---
+import '../../styles/prose.css';
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import type { Lang } from '../../i18n/routes';
+import { SITE } from '../../data/site';
+import { findTranslation, formatDate, postUrl, type Post } from '../../lib/posts';
+
+interface Props {
+  post: Post;
+  lang: Lang;
+}
+
+const { post, lang } = Astro.props;
+const all = await getCollection('log', (p) => (import.meta.env.PROD ? !p.data.draft : true));
+// Pairs are already asserted by getPosts in prod; in dev an unpaired draft
+// falls back to itself so the language toggle still renders.
+const pair = findTranslation(post, all) ?? post;
+const alternate =
+  lang === 'en'
+    ? { en: postUrl(post), es: postUrl(pair) }
+    : { en: postUrl(pair), es: postUrl(post) };
+const { Content } = await render(post);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  inLanguage: lang,
+  author: { '@type': 'Person', name: SITE.name, url: SITE.url },
+  ...(post.data.cover && { image: new URL(post.data.cover.src, Astro.site).href }),
+};
+---
+
+<Base
+  lang={lang}
+  title={`${post.data.title} — ${SITE.displayName}`}
+  description={post.data.description}
+  alternate={alternate}
+  ogType="article"
+  ogImage={post.data.cover?.src}
+  jsonLd={jsonLd}
+>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <p
+      data-vt-morph
+      style={`--vt-name: post-date-${post.data.translationKey}`}
+      class="text-sm tracking-wide text-ink/65 uppercase"
+    >
+      {formatDate(post, lang)}
+    </p>
+    <h1
+      data-vt-morph
+      style={`--vt-name: post-title-${post.data.translationKey}`}
+      class="mt-2 font-display text-4xl font-semibold tracking-tight sm:text-5xl"
+    >
+      {post.data.title}
+    </h1>
+    {
+      post.data.tags.length > 0 && (
+        <p
+          data-vt-morph
+          style={`--vt-name: post-tags-${post.data.translationKey}`}
+          class="mt-3 flex flex-wrap gap-x-3 text-sm text-accent"
+        >
+          {post.data.tags.map((tag) => (
+            <span>#{tag}</span>
+          ))}
+        </p>
+      )
+    }
+    {
+      post.data.cover && (
+        <Image
+          src={post.data.cover}
+          alt={post.data.coverAlt}
+          widths={[768, 1536]}
+          sizes="(min-width: 768px) 768px, 100vw"
+          class="mt-10 w-full rounded-2xl"
+          loading="eager"
+          fetchpriority="high"
+          data-vt-morph
+          style={`--vt-name: post-cover-${post.data.translationKey}`}
+        />
+      )
+    }
+    {
+      post.data.coverVideo && (
+        <video
+          src={post.data.coverVideo}
+          class="mt-10 w-full rounded-2xl"
+          autoplay
+          muted
+          loop
+          playsinline
+          data-vt-morph
+          style={`--vt-name: post-cover-${post.data.translationKey}`}
+        />
+      )
+    }
+    <div class="prose mt-10">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<script>
+  import '@justinribeiro/lite-youtube';
+
+  // Autoplaying cover videos respect reduced motion: pause and hand over controls.
+  document.addEventListener('astro:page-load', () => {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll<HTMLVideoElement>('video[autoplay]').forEach((v) => {
+      v.pause();
+      v.controls = true;
+    });
+  });
+</script>

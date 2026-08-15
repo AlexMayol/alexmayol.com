@@ -1,0 +1,78 @@
+/* ponytail: hand-rolled replacement for @tailwindcss/typography — covers what
+   posts actually use (see post-template.md); add rules when a post needs more
+   (tables, footnotes, …). Loaded only by PostPage, so it never blocks other
+   pages. */
+.prose {
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+.prose :where(p, ul, ol, pre, blockquote, img, lite-youtube) {
+  margin-block: 1.25em;
+}
+
+.prose :where(h2, h3) {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.prose :where(h2) {
+  font-size: 1.5em;
+  margin-block: 1.75em 0.75em;
+}
+.prose :where(h3) {
+  font-size: 1.25em;
+  margin-block: 1.5em 0.75em;
+}
+
+.prose :where(a) {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose :where(code) {
+  font-size: 0.875em;
+  background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.375rem;
+}
+.prose :where(pre) {
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+}
+.prose :where(pre code) {
+  font-size: 0.875em;
+  background: none;
+  padding: 0;
+}
+
+.prose :where(blockquote) {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1.25em;
+  font-style: italic;
+  color: color-mix(in srgb, var(--color-ink) 80%, transparent);
+}
+
+.prose :where(ul) {
+  list-style: disc;
+  padding-left: 1.5em;
+}
+.prose :where(ol) {
+  list-style: decimal;
+  padding-left: 1.5em;
+}
+.prose :where(li) {
+  margin-block: 0.5em;
+}
+
+.prose :where(img) {
+  border-radius: 0.75rem;
+  max-width: 100%;
+  height: auto;
+}
+.prose :where(lite-youtube) {
+  border-radius: 0.75rem;
+  max-width: 100%;
+}
