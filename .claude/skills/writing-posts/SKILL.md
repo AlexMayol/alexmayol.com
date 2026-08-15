@@ -41,8 +41,36 @@ entry id and break language detection.
   version should read as if originally written in that language.
 - Keep title and description language-appropriate; they don't need to be
   literal translations.
-- Standard markdown; links and code fences work. Images go in
-  `src/assets/` and are referenced relatively (Astro optimizes them).
+- Standard markdown; links and code fences work.
+- A full reference of every supported pattern lives at
+  `src/content/thoughts/en/post-template.md` (a permanent draft — copy
+  from it, never set its `draft: false`).
+
+## Images
+
+Put images in `src/content/thoughts/_images/` (shared by both languages)
+and reference them relatively from the post:
+
+```markdown
+![Descriptive alt text](../_images/my-image.png)
+```
+
+Astro optimizes these at build time. Never use `public/` paths for post
+images — they'd skip optimization. Always write meaningful alt text, in
+the post's language.
+
+## YouTube videos
+
+Embed with the `<lite-youtube>` web component (raw HTML in markdown; its
+script loads automatically on post pages, and only the thumbnail loads
+until the reader clicks play):
+
+```html
+<lite-youtube videoid="dQw4w9WgXcQ" videotitle="Descriptive video title"></lite-youtube>
+```
+
+`videotitle` is required for accessibility; write it in the post's
+language.
 
 ## Publish checklist
 
