@@ -4,7 +4,7 @@ description: El cambio de paradigma que ya está aquí y mi proceso de adaptaci�
 date: 2026-08-15
 translationKey: product-engineering
 tags: [product, engineering, software]
-draft: true
+draft: false
 cover: ../_images/product-engineering-cover.jpg
 coverAlt: Ilustración de un equipo construyendo y programando un robot gigante frente a una pantalla con código
 ---
