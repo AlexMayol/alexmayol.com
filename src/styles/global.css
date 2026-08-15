@@ -71,11 +71,11 @@
    data-vt attribute is set per-navigation in Base.astro's script; the html
    prefix out-specifies the generated slide rules on main. Post titles morph
    separately via their shared transition:name. */
-/* Post titles become their own view-transition group only while entering or
-   leaving a post — they morph between listing and post then, but ride along
-   inside main's slide on every other navigation. */
-html[data-vt] [data-vt-title] {
-  view-transition-name: var(--vt-title);
+/* Post titles and covers become their own view-transition groups only while
+   entering or leaving a post — they morph between listing and post then, but
+   ride along inside main's slide on every other navigation. */
+html[data-vt] [data-vt-morph] {
+  view-transition-name: var(--vt-name);
 }
 
 html[data-vt='post-enter']::view-transition-old(main) {

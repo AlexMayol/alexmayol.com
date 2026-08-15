@@ -13,13 +13,16 @@ coverAlt: Ilustración de un equipo construyendo y programando un robot gigante 
 
 ## El cambio de paradigma que ya está aquí
 
-Hace menos de un año, prácticamente de la noche a la mañana, la forma en la que trabajábamos cambió radicalmente: abrazamos el desarrollo con IA de principio a fin, y este sutil cambio ha 
-Hace menos de un año, prácticamente de la noche a la mañana, la forma en la que trabajábamos cambió radicalmente: abrazamos el desarrollo con IA de principio a fin, y este sutil cambio ha 
-Hace menos de un año, prácticamente de la noche a la mañana, la forma en la que trabajábamos cambió radicalmente: abrazamos el desarrollo con IA de principio a fin, y este sutil cambio ha 
+WIP WIP WIP
+WIP WIP WIP
+WIP WIP WIP
+WIP WIP WIP
+WIP WIP WIP
+WIP WIP WIP
 
-## El cambio de paradigma ewf 
+### Y ahora, qué?
 
-Hace menos de un año, prácticamente de la noche a la mañana, la forma en la que trabajábamos cambió radicalmente: abrazamos el desarrollo con IA de principio a fin, y este sutil cambio ha 
-Hace menos de un año, prácticamente de la noche a la mañana, la forma en la que trabajábamos cambió radicalmente: abrazamos el desarrollo con IA de principio a fin, y este sutil cambio ha 
-Hace menos de un año, prácticamente de la noche a la mañana, la forma en la que trabajábamos cambió radicalmente: abrazamos el desarrollo con IA de principio a fin, y este sutil cambio ha 
-Hace menos de un año, prácticamente de la noche a la mañana, la forma en la que trabajábamos cambió radicalmente: abrazamos el desarrollo con IA de principio a fin, y este sutil cambio ha 
+WIP WIP WIPWIP WIP WIP
+WIP WIP WIP
+WIP WIP WIP
+WIP WIP WIP

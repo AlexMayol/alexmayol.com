@@ -176,7 +176,7 @@ export const ui = {
     },
     contact: {
       heading: "Let's talk.",
-      intro: 'Find me on any of these — I answer.',
+      intro: 'Find me on any of these',
       github: 'Code, experiments and open source.',
       linkedin: 'Career, experience and professional chat.',
       email: 'The direct line.',
@@ -237,7 +237,7 @@ export const ui = {
     },
     contact: {
       heading: 'Hablemos.',
-      intro: 'Encuéntrame en cualquiera de estos sitios — respondo.',
+      intro: 'Encuéntrame en cualquiera de estos sitios.',
       github: 'Código, experimentos y open source.',
       linkedin: 'Trayectoria, experiencia y charla profesional.',
       email: 'La línea directa.',
