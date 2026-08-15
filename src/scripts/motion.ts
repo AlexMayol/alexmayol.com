@@ -1,72 +1,46 @@
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// Single dispatcher: pages just `import '../scripts/motion'`. The module runs
+// once ever (ClientRouter keeps it alive across navigations), so listeners are
+// registered here instead of per-page scripts.
+let io: IntersectionObserver | undefined;
 
-gsap.registerPlugin(ScrollTrigger);
+document.addEventListener('astro:before-swap', () => io?.disconnect());
 
-// Stale triggers reference the outgoing page's DOM; kill them before swap.
-document.addEventListener('astro:before-swap', () => {
-  ScrollTrigger.getAll().forEach((t) => t.kill());
-});
-
-// Single dispatcher: pages just `import '../scripts/motion'`. Registering the
-// page-load listener here (module runs once) instead of per-page scripts —
-// two pages' identical listeners would each run gsap.from() on the same
-// elements, and the second from() captures the first one's hidden state as
-// its end value, leaving content stuck invisible.
 document.addEventListener('astro:page-load', () => {
-  if (document.querySelector('[data-reveal]')) initScrollReveal();
-  if (document.querySelector('[data-tilt]')) {
-    initStagger();
-    initFloat();
-    initTilt();
-  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  initReveal();
+  initTilt();
 });
 
-const reduced = () =>
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function initScrollReveal() {
-  if (reduced()) return;
-  document.querySelectorAll('[data-reveal]').forEach((el) => {
-    gsap.from(el, {
-      y: 24,
-      opacity: 0,
-      duration: 0.7,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-    });
-  });
-}
-
-function initStagger() {
-  if (reduced()) return;
+// Pre-hides [data-reveal] and [data-stagger] children, then plays the CSS
+// `rise` animation (see global.css) when they scroll into view. Content stays
+// visible if this script never runs — the hidden state is only applied here.
+function initReveal() {
+  const targets = document.querySelectorAll<HTMLElement>('[data-reveal], [data-stagger] > *');
+  if (!targets.length) return;
   document.querySelectorAll('[data-stagger]').forEach((group) => {
-    gsap.from(group.children, {
-      y: 32,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-      stagger: 0.12,
+    [...group.children].forEach((child, i) => {
+      (child as HTMLElement).style.animationDelay = `${i * 120}ms`;
     });
   });
-}
-
-function initFloat() {
-  if (reduced()) return;
-  document.querySelectorAll('[data-float]').forEach((el, i) => {
-    gsap.to(el, {
-      y: i % 2 === 0 ? -14 : 14,
-      rotation: i % 2 === 0 ? 4 : -4,
-      duration: 2.6 + i * 0.4,
-      ease: 'sine.inOut',
-      yoyo: true,
-      repeat: -1,
-    });
+  io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.replace('will-reveal', 'is-in');
+        io?.unobserve(entry.target);
+      }
+    },
+    // Huge top margin: elements jumped past (End key, anchor link, restored
+    // scroll position) count as intersecting instead of staying hidden.
+    { rootMargin: '10000px 0px -15% 0px' }
+  );
+  targets.forEach((el) => {
+    el.classList.add('will-reveal');
+    io!.observe(el);
   });
 }
 
 function initTilt() {
-  if (reduced()) return;
   document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
     card.addEventListener('pointermove', (e) => {
       const r = card.getBoundingClientRect();

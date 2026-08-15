@@ -1,4 +1,5 @@
 ---
+import '../../styles/prose.css';
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import type { Lang } from '../../i18n/routes';
@@ -43,7 +44,7 @@ const jsonLd = {
     <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
       {post.data.title}
     </h1>
-    <div class="prose prose-lg mt-10 max-w-none prose-headings:font-display prose-a:text-accent">
+    <div class="prose mt-10">
       <Content />
     </div>
   </article>

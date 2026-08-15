@@ -1,9 +1,35 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 
 @theme {
   --color-paper: #FAF8F5;
   --color-ink: #1C1B1A;
   --color-accent: #C2410C;
   --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+}
+
+/* Scroll reveal (driven by scripts/motion.ts). `.will-reveal` is only ever
+   added by JS, so content stays visible without it. The animation has no
+   forwards fill: once it ends, inline transforms (card tilt) work again. */
+.will-reveal {
+  opacity: 0;
+}
+.is-in {
+  animation: rise 0.7s cubic-bezier(0.33, 1, 0.68, 1) backwards;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-float] {
+    animation: float 5.2s ease-in-out infinite alternate;
+  }
+}
+@keyframes float {
+  to {
+    transform: translateY(-14px) rotate(4deg);
+  }
 }

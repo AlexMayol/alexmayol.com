@@ -1,5 +1,6 @@
 ---
 import '@fontsource-variable/fraunces';
+import frauncesLatinUrl from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
@@ -26,6 +27,7 @@ const abs = (path: string) => new URL(path, Astro.site).href;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="preload" as="font" type="font/woff2" href={frauncesLatinUrl} crossorigin />
     <link rel="canonical" href={abs(alternate[lang])} />
     <link rel="alternate" hreflang="en" href={abs(alternate.en)} />
     <link rel="alternate" hreflang="es" href={abs(alternate.es)} />
