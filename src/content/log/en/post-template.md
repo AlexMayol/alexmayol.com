@@ -5,7 +5,10 @@ date: 2026-08-15
 translationKey: post-template
 tags: [template]
 draft: true
-cover: ../_images/sample.png # optional og:image for social shares (ideal 1200×630); omit to use the site default
+cover: ../_images/sample.png # optional hero image, also the og:image (ideal 1200×630)
+coverAlt: A sample cover image # describe the cover for screen readers
+# coverVideo: /media/my-video.mp4 # optional looping hero video (file in public/media/);
+#                                   mutually exclusive with cover — set only one
 ---
 
 <!--

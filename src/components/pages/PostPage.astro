@@ -1,6 +1,7 @@
 ---
 import '../../styles/prose.css';
 import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import type { Lang } from '../../i18n/routes';
 import { SITE } from '../../data/site';
@@ -46,6 +47,24 @@ const jsonLd = {
     <h1 class="mt-2 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
       {post.data.title}
     </h1>
+    {
+      post.data.cover && (
+        <Image
+          src={post.data.cover}
+          alt={post.data.coverAlt}
+          widths={[768, 1536]}
+          sizes="(min-width: 768px) 768px, 100vw"
+          class="mt-10 w-full rounded-2xl"
+          loading="eager"
+          fetchpriority="high"
+        />
+      )
+    }
+    {
+      post.data.coverVideo && (
+        <video src={post.data.coverVideo} class="mt-10 w-full rounded-2xl" autoplay muted loop playsinline />
+      )
+    }
     <div class="prose mt-10">
       <Content />
     </div>
@@ -54,4 +73,13 @@ const jsonLd = {
 
 <script>
   import '@justinribeiro/lite-youtube';
+
+  // Autoplaying cover videos respect reduced motion: pause and hand over controls.
+  document.addEventListener('astro:page-load', () => {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll<HTMLVideoElement>('video[autoplay]').forEach((v) => {
+      v.pause();
+      v.controls = true;
+    });
+  });
 </script>
