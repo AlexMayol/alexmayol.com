@@ -20,7 +20,7 @@ Opening paragraph. Plain markdown works everywhere: **bold**, _italic_,
 
 ## Images
 
-Put images in `src/content/thoughts/_images/` and reference them with a
+Put images in `src/content/log/_images/` and reference them with a
 relative path. Astro optimizes them at build time (resized, hashed,
 modern format) — never use `public/` paths for post images.
 

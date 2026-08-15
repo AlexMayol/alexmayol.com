@@ -1,6 +1,6 @@
 ---
 name: writing-posts
-description: Use when writing or editing a blog post for the /thoughts section of alexmayol.com — covers file locations, frontmatter, the translation-pair rule, and the publish checklist.
+description: Use when writing or editing a blog post for the /log section of alexmayol.com — covers file locations, frontmatter, the translation-pair rule, and the publish checklist.
 ---
 
 # Writing Blog Posts
@@ -10,11 +10,11 @@ build fails if a published post is missing its counterpart.
 
 ## File locations
 
-- English: `src/content/thoughts/en/<english-slug>.md`
-- Spanish: `src/content/thoughts/es/<spanish-slug>.md`
+- English: `src/content/log/en/<english-slug>.md`
+- Spanish: `src/content/log/es/<spanish-slug>.md`
 
-The filename IS the URL slug: `en/my-post.md` → `/thoughts/my-post/`,
-`es/mi-post.md` → `/pensamientos/mi-post/`. Use kebab-case, translate the
+The filename IS the URL slug: `en/my-post.md` → `/log/my-post/`,
+`es/mi-post.md` → `/bitacora/mi-post/`. Use kebab-case, translate the
 slug into each language naturally (do not reuse the English slug for
 Spanish unless the natural slug is identical).
 
@@ -43,12 +43,12 @@ entry id and break language detection.
   literal translations.
 - Standard markdown; links and code fences work.
 - A full reference of every supported pattern lives at
-  `src/content/thoughts/en/post-template.md` (a permanent draft — copy
+  `src/content/log/en/post-template.md` (a permanent draft — copy
   from it, never set its `draft: false`).
 
 ## Images
 
-Put images in `src/content/thoughts/_images/` (shared by both languages)
+Put images in `src/content/log/_images/` (shared by both languages)
 and reference them relatively from the post:
 
 ```markdown
@@ -79,6 +79,6 @@ language.
 2. Run `npm run build`. It fails with a "has no ... translation" error if
    the pair is broken — fix before continuing.
 3. Verify both URLs exist in the output:
-   `dist/thoughts/<english-slug>/index.html` and
-   `dist/pensamientos/<spanish-slug>/index.html`.
+   `dist/log/<english-slug>/index.html` and
+   `dist/bitacora/<spanish-slug>/index.html`.
 4. Commit both files together.

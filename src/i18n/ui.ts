@@ -4,7 +4,7 @@ export const ui = {
       projects: 'Projects',
       contact: 'Contact',
       freelancing: 'Freelancing',
-      thoughts: 'Thoughts',
+      log: 'Log',
       menu: 'Menu',
     },
     meta: {
@@ -27,8 +27,8 @@ export const ui = {
         description:
           'Freelance web projects: Cliener (renewable energy) and Bluemation (industrial automation).',
       },
-      thoughts: {
-        title: 'Thoughts — Alejandro Mayol',
+      log: {
+        title: 'Log — Alejandro Mayol',
         description: 'Writing on frontend engineering, experiences and learnings.',
       },
     },
@@ -53,8 +53,8 @@ export const ui = {
       ctaQuestion: 'Have a project in mind?',
       cta: 'Work with me',
     },
-    thoughts: {
-      heading: 'Thoughts',
+    log: {
+      heading: 'Log',
       intro: 'Writing on frontend engineering, experiences and learnings.',
       empty: 'Nothing here yet.',
     },
@@ -64,7 +64,7 @@ export const ui = {
       projects: 'Proyectos',
       contact: 'Contacto',
       freelancing: 'Freelance',
-      thoughts: 'Pensamientos',
+      log: 'Bitácora',
       menu: 'Menú',
     },
     meta: {
@@ -87,8 +87,8 @@ export const ui = {
         description:
           'Proyectos freelance: Cliener (energías renovables) y Bluemation (automatización industrial).',
       },
-      thoughts: {
-        title: 'Pensamientos — Alejandro Mayol',
+      log: {
+        title: 'Bitácora — Alejandro Mayol',
         description:
           'Escritos sobre ingeniería frontend, experiencias y aprendizajes.',
       },
@@ -113,8 +113,8 @@ export const ui = {
       ctaQuestion: '¿Tienes un proyecto en mente?',
       cta: 'Trabajemos juntos',
     },
-    thoughts: {
-      heading: 'Pensamientos',
+    log: {
+      heading: 'Bitácora',
       intro: 'Escritos sobre ingeniería frontend, experiencias y aprendizajes.',
       empty: 'Aún no hay nada por aquí.',
     },

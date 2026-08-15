@@ -1,7 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import type { Lang } from '../i18n/routes';
+import { routes, type Lang } from '../i18n/routes';
 
-export type Post = CollectionEntry<'thoughts'>;
+export type Post = CollectionEntry<'log'>;
 
 export function postLang(post: Post): Lang {
   return post.id.startsWith('es/') ? 'es' : 'en';
@@ -12,8 +12,7 @@ export function postSlug(post: Post): string {
 }
 
 export function postUrl(post: Post): string {
-  const base = postLang(post) === 'en' ? '/thoughts/' : '/pensamientos/';
-  return `${base}${postSlug(post)}/`;
+  return `${routes.log[postLang(post)]}${postSlug(post)}/`;
 }
 
 export function formatDate(post: Post, lang: Lang): string {
@@ -33,14 +32,14 @@ export function translationOf(post: Post, all: Post[]): Post {
   if (!pair) {
     throw new Error(
       `Post "${post.id}" has no ${lang === 'en' ? 'Spanish' : 'English'} translation. ` +
-        `Add a post with translationKey "${post.data.translationKey}" under src/content/thoughts/${lang === 'en' ? 'es' : 'en'}/.`
+        `Add a post with translationKey "${post.data.translationKey}" under src/content/log/${lang === 'en' ? 'es' : 'en'}/.`
     );
   }
   return pair;
 }
 
 export async function getPosts(lang: Lang): Promise<Post[]> {
-  const all = await getCollection('thoughts', (p) => !p.data.draft);
+  const all = await getCollection('log', (p) => !p.data.draft);
   for (const post of all) translationOf(post, all); // fail the build on missing pairs
   return all
     .filter((p) => postLang(p) === lang)

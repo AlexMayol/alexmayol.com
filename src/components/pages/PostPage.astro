@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { post, lang } = Astro.props;
-const all = await getCollection('thoughts', (p) => !p.data.draft);
+const all = await getCollection('log', (p) => !p.data.draft);
 const pair = translationOf(post, all);
 const alternate =
   lang === 'en'

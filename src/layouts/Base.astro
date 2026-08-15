@@ -76,9 +76,9 @@ const abs = (path: string) => new URL(path, Astro.site).href;
       import { routes } from '../i18n/routes';
 
       // Slide direction follows nav order (home < projects < freelancing <
-      // thoughts < contact) instead of browser history: navigating to a page
+      // log < contact) instead of browser history: navigating to a page
       // further right in the nav slides forward, further left slides back.
-      const sectionOrder = ['projects', 'freelancing', 'thoughts', 'contact'] as const;
+      const sectionOrder = ['projects', 'freelancing', 'log', 'contact'] as const;
       const prefixes = sectionOrder.flatMap((key, i) =>
         (['en', 'es'] as const).map((l) => [routes[key][l], i + 1] as const)
       );

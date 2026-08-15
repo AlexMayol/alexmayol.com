@@ -5,7 +5,7 @@ export const routes = {
   projects: { en: '/projects/', es: '/proyectos/' },
   contact: { en: '/contact/', es: '/contacto/' },
   freelancing: { en: '/freelancing/', es: '/freelance/' },
-  thoughts: { en: '/thoughts/', es: '/pensamientos/' },
+  log: { en: '/log/', es: '/bitacora/' },
 } as const;
 
 export type PageKey = keyof typeof routes;
