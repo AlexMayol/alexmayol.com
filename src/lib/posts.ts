@@ -23,12 +23,17 @@ export function formatDate(post: Post, lang: Lang): string {
   });
 }
 
+export function findTranslation(post: Post, all: Post[]): Post | undefined {
+  const lang = postLang(post);
+  return all.find(
+    (p) => p.data.translationKey === post.data.translationKey && postLang(p) !== lang
+  );
+}
+
 /** Every published post must have a published counterpart in the other language. */
 export function translationOf(post: Post, all: Post[]): Post {
   const lang = postLang(post);
-  const pair = all.find(
-    (p) => p.data.translationKey === post.data.translationKey && postLang(p) !== lang
-  );
+  const pair = findTranslation(post, all);
   if (!pair) {
     throw new Error(
       `Post "${post.id}" has no ${lang === 'en' ? 'Spanish' : 'English'} translation. ` +
@@ -38,9 +43,11 @@ export function translationOf(post: Post, all: Post[]): Post {
   return pair;
 }
 
+/** Dev shows drafts (and skips the pair check) so posts can be previewed
+ *  before their translation exists; production builds stay strict. */
 export async function getPosts(lang: Lang): Promise<Post[]> {
-  const all = await getCollection('log', (p) => !p.data.draft);
-  for (const post of all) translationOf(post, all); // fail the build on missing pairs
+  const all = await getCollection('log', (p) => import.meta.env.PROD ? !p.data.draft : true);
+  if (import.meta.env.PROD) for (const post of all) translationOf(post, all);
   return all
     .filter((p) => postLang(p) === lang)
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());

@@ -5,7 +5,7 @@ import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import type { Lang } from '../../i18n/routes';
 import { SITE } from '../../data/site';
-import { formatDate, postUrl, translationOf, type Post } from '../../lib/posts';
+import { findTranslation, formatDate, postUrl, type Post } from '../../lib/posts';
 
 interface Props {
   post: Post;
@@ -13,8 +13,10 @@ interface Props {
 }
 
 const { post, lang } = Astro.props;
-const all = await getCollection('log', (p) => !p.data.draft);
-const pair = translationOf(post, all);
+const all = await getCollection('log', (p) => (import.meta.env.PROD ? !p.data.draft : true));
+// Pairs are already asserted by getPosts in prod; in dev an unpaired draft
+// falls back to itself so the language toggle still renders.
+const pair = findTranslation(post, all) ?? post;
 const alternate =
   lang === 'en'
     ? { en: postUrl(post), es: postUrl(pair) }
