@@ -5,6 +5,7 @@ export const ui = {
       contact: 'Contact',
       freelancing: 'Freelancing',
       thoughts: 'Thoughts',
+      menu: 'Menu',
     },
     meta: {
       home: {
@@ -64,6 +65,7 @@ export const ui = {
       contact: 'Contacto',
       freelancing: 'Freelance',
       thoughts: 'Pensamientos',
+      menu: 'Menú',
     },
     meta: {
       home: {
