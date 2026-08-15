@@ -48,7 +48,7 @@ const abs = (path: string) => new URL(path, Astro.site).href;
   </head>
   <body class="min-h-dvh bg-paper font-sans text-ink antialiased">
     <Header lang={lang} alternate={alternate} />
-    <main><slot /></main>
+    <main transition:animate="slide"><slot /></main>
     <footer class="mx-auto max-w-3xl px-6 py-12 text-sm text-ink/65">
       © {new Date().getFullYear()} {SITE.name}
     </footer>
