@@ -52,5 +52,26 @@ const abs = (path: string) => new URL(path, Astro.site).href;
     <footer class="mx-auto max-w-3xl px-6 py-12 text-sm text-ink/65">
       © {new Date().getFullYear()} {SITE.name}
     </footer>
+    <script>
+      import type { TransitionBeforePreparationEvent } from 'astro:transitions/client';
+      import { routes } from '../i18n/routes';
+
+      // Slide direction follows nav order (home < projects < freelancing <
+      // thoughts < contact) instead of browser history: navigating to a page
+      // further right in the nav slides forward, further left slides back.
+      const sectionOrder = ['projects', 'freelancing', 'thoughts', 'contact'] as const;
+      const prefixes = sectionOrder.flatMap((key, i) =>
+        (['en', 'es'] as const).map((l) => [routes[key][l], i + 1] as const)
+      );
+      const order = (path: string) => {
+        const p = path.endsWith('/') ? path : `${path}/`;
+        return prefixes.find(([prefix]) => p.startsWith(prefix))?.[1] ?? 0;
+      };
+
+      document.addEventListener('astro:before-preparation', (event) => {
+        const e = event as TransitionBeforePreparationEvent;
+        e.direction = order(e.to.pathname) < order(e.from.pathname) ? 'back' : 'forward';
+      });
+    </script>
   </body>
 </html>
