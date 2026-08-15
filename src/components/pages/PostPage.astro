@@ -28,6 +28,7 @@ const jsonLd = {
   datePublished: post.data.date.toISOString(),
   inLanguage: lang,
   author: { '@type': 'Person', name: SITE.name, url: SITE.url },
+  ...(post.data.cover && { image: new URL(post.data.cover.src, Astro.site).href }),
 };
 ---
 
@@ -37,6 +38,7 @@ const jsonLd = {
   description={post.data.description}
   alternate={alternate}
   ogType="article"
+  ogImage={post.data.cover?.src}
   jsonLd={jsonLd}
 >
   <article class="mx-auto max-w-3xl px-6 py-16">

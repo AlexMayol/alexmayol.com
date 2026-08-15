@@ -28,6 +28,9 @@ date: 2026-08-04            # same date in both files
 translationKey: my-post     # IDENTICAL in both files — this pairs them
 tags: [tag-a, tag-b]        # optional, same tags in both files
 draft: true                 # optional; draft posts are excluded from the build
+cover: ../_images/my-cover.png # optional; og:image for social shares, ideal 1200×630.
+                               # Omit to use the site-wide /og.png. Same image in
+                               # both files (covers live in the shared _images/).
 ---
 ```
 

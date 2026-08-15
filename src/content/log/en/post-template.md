@@ -5,6 +5,7 @@ date: 2026-08-15
 translationKey: post-template
 tags: [template]
 draft: true
+cover: ../_images/sample.png # optional og:image for social shares (ideal 1200×630); omit to use the site default
 ---
 
 <!--
