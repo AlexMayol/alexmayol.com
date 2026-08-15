@@ -66,3 +66,32 @@
     transform: translateX(-100%);
   }
 }
+
+/* Navigations into/out of a blog post zoom+fade instead of sliding. The
+   data-vt attribute is set per-navigation in Base.astro's script; the html
+   prefix out-specifies the generated slide rules on main. Post titles morph
+   separately via their shared transition:name. */
+html[data-vt='post-enter']::view-transition-old(main) {
+  animation: vtFadeOut 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+html[data-vt='post-enter']::view-transition-new(main) {
+  animation: vtZoomFadeIn 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+html[data-vt='post-exit']::view-transition-old(main) {
+  animation: vtZoomFadeOut 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+html[data-vt='post-exit']::view-transition-new(main) {
+  animation: vtFadeIn 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+@keyframes vtZoomFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+@keyframes vtZoomFadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}

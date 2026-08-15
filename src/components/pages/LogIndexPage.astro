@@ -30,7 +30,10 @@ const posts = await getPosts(lang);
         <li>
           <article>
             <p class="text-sm tracking-wide text-ink/65 uppercase">{formatDate(post, lang)}</p>
-            <h2 class="mt-1 font-display text-2xl font-semibold">
+            <h2
+              transition:name={`post-title-${post.data.translationKey}`}
+              class="mt-1 font-display text-2xl font-semibold"
+            >
               <a href={postUrl(post)} class="hover:text-accent">{post.data.title}</a>
             </h2>
             <p class="mt-2 text-ink/70">{post.data.description}</p>
