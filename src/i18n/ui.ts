@@ -49,7 +49,6 @@ export const ui = {
       intro:
         'Websites I design, build and ship end-to-end for real businesses.',
       visit: 'Visit site',
-      code: 'Source code',
       ctaQuestion: 'Have a project in mind?',
       cta: 'Work with me',
     },
@@ -109,7 +108,6 @@ export const ui = {
       heading: 'Freelance',
       intro: 'Webs que diseño, construyo y publico de principio a fin para negocios reales.',
       visit: 'Visitar web',
-      code: 'Código fuente',
       ctaQuestion: '¿Tienes un proyecto en mente?',
       cta: 'Trabajemos juntos',
     },
