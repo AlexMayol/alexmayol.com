@@ -15,6 +15,11 @@ export function postUrl(post: Post): string {
   return `${routes.log[postLang(post)]}${postSlug(post)}/`;
 }
 
+/* ponytail: chars/1100 ~= 200 wpm at ~5.5 chars/word — close enough for a badge */
+export function readingTime(post: Post): number {
+  return Math.max(1, Math.round((post.body ?? '').length / 1100));
+}
+
 export function formatDate(post: Post, lang: Lang): string {
   return post.data.date.toLocaleDateString(lang === 'en' ? 'en-US' : 'es-ES', {
     year: 'numeric',

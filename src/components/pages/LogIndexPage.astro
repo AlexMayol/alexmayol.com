@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { routes, type Lang } from '../../i18n/routes';
 import { ui } from '../../i18n/ui';
-import { getPosts, postUrl, formatDate } from '../../lib/posts';
+import { getPosts, postUrl, formatDate, readingTime } from '../../lib/posts';
 
 interface Props {
   lang: Lang;
@@ -29,7 +29,9 @@ const posts = await getPosts(lang);
       {posts.map((post) => (
         <li>
           <article>
-            <p class="text-sm tracking-wide text-ink/65 uppercase">{formatDate(post, lang)}</p>
+            <p class="text-sm tracking-wide text-ink/65 uppercase">
+              {formatDate(post, lang)} · {readingTime(post)} {t.log.minRead}
+            </p>
             <h2
               transition:name={`post-title-${post.data.translationKey}`}
               class="mt-1 font-display text-2xl font-semibold"

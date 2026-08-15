@@ -57,6 +57,7 @@ export const ui = {
       heading: 'Log',
       intro: 'Writing on frontend engineering, experiences and learnings.',
       empty: 'Nothing here yet.',
+      minRead: 'min read',
     },
   },
   es: {
@@ -117,6 +118,7 @@ export const ui = {
       heading: 'Bitácora',
       intro: 'Escritos sobre ingeniería frontend, experiencias y aprendizajes.',
       empty: 'Aún no hay nada por aquí.',
+      minRead: 'min de lectura',
     },
   },
 } as const;
