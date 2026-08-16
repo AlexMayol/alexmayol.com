@@ -48,16 +48,8 @@ const cards = [
       aria-hidden="true">@</span
     >
 
-    <h1
-      data-vt-morph
-      style="--vt-name: section-title-contact"
-      class="font-display text-5xl font-semibold tracking-tight"
-    >
-      {t.contact.heading}
-    </h1>
-    <p data-vt-morph style="--vt-name: section-blurb-contact" class="mt-4 max-w-xl text-lg text-ink/70">
-      {t.contact.intro}
-    </p>
+    <h1 class="font-display text-5xl font-semibold tracking-tight">{t.contact.heading}</h1>
+    <p class="mt-4 max-w-xl text-lg text-ink/70">{t.contact.intro}</p>
 
     <div data-stagger class="mt-14 grid gap-6 sm:grid-cols-3" style="perspective: 1200px">
       {cards.map((card) => (

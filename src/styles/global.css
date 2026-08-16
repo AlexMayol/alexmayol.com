@@ -94,27 +94,27 @@
   }
 }
 
-/* Drill-down navigations (home → section, listing → post) zoom+fade instead
-   of sliding; drilling back out reverses it. The data-vt attribute is set
-   per-navigation in Base.astro's script; the html prefix out-specifies the
-   generated slide rules on main. Elements shared by both sides (titles,
-   covers, intros) become their own view-transition groups only during these
-   navigations — they morph then, but ride along inside main's slide on every
-   other navigation. */
+/* Navigations into/out of a blog post zoom+fade instead of sliding. The
+   data-vt attribute is set per-navigation in Base.astro's script; the html
+   prefix out-specifies the generated slide rules on main. Post titles morph
+   separately via their shared transition:name. */
+/* Post titles and covers become their own view-transition groups only while
+   entering or leaving a post — they morph between listing and post then, but
+   ride along inside main's slide on every other navigation. */
 html[data-vt] [data-vt-morph] {
   view-transition-name: var(--vt-name);
 }
 
-html[data-vt='zoom-in']::view-transition-old(main) {
+html[data-vt='post-enter']::view-transition-old(main) {
   animation: vtFadeOut 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
 }
-html[data-vt='zoom-in']::view-transition-new(main) {
+html[data-vt='post-enter']::view-transition-new(main) {
   animation: vtZoomFadeIn 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
 }
-html[data-vt='zoom-out']::view-transition-old(main) {
+html[data-vt='post-exit']::view-transition-old(main) {
   animation: vtZoomFadeOut 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
 }
-html[data-vt='zoom-out']::view-transition-new(main) {
+html[data-vt='post-exit']::view-transition-new(main) {
   animation: vtFadeIn 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
 }
 @keyframes vtZoomFadeIn {

@@ -20,16 +20,8 @@ const jobs = experience[lang];
   alternate={routes.experience}
 >
   <section class="mx-auto max-w-3xl px-6 py-16">
-    <h1
-      data-vt-morph
-      style="--vt-name: section-title-experience"
-      class="font-display text-5xl font-semibold tracking-tight"
-    >
-      {t.experience.heading}
-    </h1>
-    <p data-vt-morph style="--vt-name: section-blurb-experience" class="mt-4 max-w-xl text-lg text-ink/70">
-      {t.experience.intro}
-    </p>
+    <h1 class="font-display text-5xl font-semibold tracking-tight">{t.experience.heading}</h1>
+    <p class="mt-4 max-w-xl text-lg text-ink/70">{t.experience.intro}</p>
     <ol class="mt-16 space-y-16 border-l border-ink/10 pl-8">
       {jobs.map((job) => (
         <li data-reveal class="relative">

@@ -12,10 +12,10 @@ const { lang } = Astro.props;
 const t = ui[lang];
 
 const cards = [
-  { key: 'experience', href: routes.experience[lang], title: t.nav.experience, blurb: t.experience.intro },
-  { key: 'freelancing', href: routes.freelancing[lang], title: t.nav.freelancing, blurb: t.freelancing.intro },
-  { key: 'log', href: routes.log[lang], title: t.nav.log, blurb: t.log.intro },
-  { key: 'contact', href: routes.contact[lang], title: t.nav.contact, blurb: t.meta.contact.description },
+  { href: routes.experience[lang], title: t.nav.experience, blurb: t.experience.intro },
+  { href: routes.freelancing[lang], title: t.nav.freelancing, blurb: t.freelancing.intro },
+  { href: routes.log[lang], title: t.nav.log, blurb: t.log.intro },
+  { href: routes.contact[lang], title: t.nav.contact, blurb: t.meta.contact.description },
 ];
 ---
 
@@ -34,21 +34,13 @@ const cards = [
 
     <div data-stagger class="mt-16 grid gap-6 sm:grid-cols-2">
       {
-        cards.map(({ key, href, title, blurb }) => (
+        cards.map(({ href, title, blurb }) => (
           <a
             href={href}
             class="group rounded-2xl border border-ink/10 bg-white/60 p-8 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
           >
-            <h2
-              data-vt-morph
-              style={`--vt-name: section-title-${key}`}
-              class="font-display text-2xl font-semibold transition-colors group-hover:text-accent"
-            >
-              {title}
-            </h2>
-            <p data-vt-morph style={`--vt-name: section-blurb-${key}`} class="mt-2 text-ink/70">
-              {blurb}
-            </p>
+            <h2 class="font-display text-2xl font-semibold transition-colors group-hover:text-accent">{title}</h2>
+            <p class="mt-2 text-ink/70">{blurb}</p>
             <span
               class="mt-4 inline-block text-sm font-semibold text-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               aria-hidden="true"
