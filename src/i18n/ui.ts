@@ -1,7 +1,7 @@
 export const ui = {
   en: {
     nav: {
-      projects: 'Projects',
+      experience: 'Experience',
       contact: 'Contact',
       freelancing: 'Freelancing',
       log: 'Log',
@@ -11,12 +11,12 @@ export const ui = {
       home: {
         title: 'Alejandro Mayol — Senior Product Engineer',
         description:
-          'Senior Product Engineer focused on accessible product experiences, design systems, and scalable frontend architectures.',
+          'Senior Product Engineer focused on accessible product experiences, design systems, and shipping product end to end.',
       },
-      projects: {
-        title: 'Projects — Alejandro Mayol',
+      experience: {
+        title: 'Experience — Alejandro Mayol',
         description:
-          'Nine years of frontend work across Magnific, Job&Talent, devaway_, Conwork, Integratur and Datanet Consultores.',
+          'Nine years of product engineering across Magnific, Job&Talent, devaway_, Conwork, Integratur and Datanet Consultores.',
       },
       contact: {
         title: 'Contact — Alejandro Mayol',
@@ -29,12 +29,12 @@ export const ui = {
       },
       log: {
         title: 'Log — Alejandro Mayol',
-        description: 'Writing on frontend engineering, experiences and learnings.',
+        description: 'Writing on product engineering, experiences and learnings.',
       },
     },
     home: { tagline: 'Senior Product Engineer' },
-    projects: {
-      heading: 'Work',
+    experience: {
+      heading: 'Experience',
       intro:
         'Nine years building for the web across product companies, agencies and consultancies.',
     },
@@ -55,14 +55,14 @@ export const ui = {
     },
     log: {
       heading: 'Log',
-      intro: 'Writing on frontend engineering, experiences and learnings.',
+      intro: 'Writing on product engineering, experiences and learnings.',
       empty: 'Nothing here yet.',
       minRead: 'min read',
     },
   },
   es: {
     nav: {
-      projects: 'Proyectos',
+      experience: 'Experiencia',
       contact: 'Contacto',
       freelancing: 'Freelance',
       log: 'Bitácora',
@@ -72,12 +72,12 @@ export const ui = {
       home: {
         title: 'Alejandro Mayol — Senior Product Engineer',
         description:
-          'Senior Product Engineer centrado en experiencias de producto accesibles, design systems y arquitecturas frontend escalables.',
+          'Senior Product Engineer centrado en experiencias de producto accesibles, design systems y producto de principio a fin.',
       },
-      projects: {
-        title: 'Proyectos — Alejandro Mayol',
+      experience: {
+        title: 'Experiencia — Alejandro Mayol',
         description:
-          'Nueve años de trabajo frontend en Magnific, Job&Talent, devaway_, Conwork, Integratur y Datanet Consultores.',
+          'Nueve años de ingeniería de producto en Magnific, Job&Talent, devaway_, Conwork, Integratur y Datanet Consultores.',
       },
       contact: {
         title: 'Contacto — Alejandro Mayol',
@@ -91,12 +91,12 @@ export const ui = {
       log: {
         title: 'Bitácora — Alejandro Mayol',
         description:
-          'Escritos sobre ingeniería frontend, experiencias y aprendizajes.',
+          'Escritos sobre ingeniería de producto, experiencias y aprendizajes.',
       },
     },
     home: { tagline: 'Senior Product Engineer' },
-    projects: {
-      heading: 'Trabajo',
+    experience: {
+      heading: 'Experiencia',
       intro:
         'Nueve años construyendo para la web en empresas de producto, agencias y consultoras.',
     },
@@ -116,7 +116,7 @@ export const ui = {
     },
     log: {
       heading: 'Bitácora',
-      intro: 'Escritos sobre ingeniería frontend, experiencias y aprendizajes.',
+      intro: 'Escritos sobre ingeniería de producto, experiencias y aprendizajes.',
       empty: 'Aún no hay nada por aquí.',
       minRead: 'min de lectura',
     },

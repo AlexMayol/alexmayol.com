@@ -14,14 +14,14 @@ const other = otherLang(lang);
 const toggleLabel = other === 'es' ? 'Ver esta página en español' : 'View this page in English';
 
 const links = [
-  [routes.projects[lang], t.projects],
+  [routes.experience[lang], t.experience],
   [routes.freelancing[lang], t.freelancing],
   [routes.log[lang], t.log],
   [routes.contact[lang], t.contact],
 ] as const;
 ---
 
-<header class="sticky top-0 z-10 border-b border-ink/10 bg-paper/90 backdrop-blur">
+<header transition:name="header" class="sticky top-0 z-10 border-b border-ink/10 bg-paper/90 backdrop-blur">
   <nav class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-6 py-4" aria-label="Main">
     <a href={routes.home[lang]} class="font-display text-lg font-semibold">{SITE.displayName}</a>
 

@@ -2,7 +2,7 @@ export type Lang = 'en' | 'es';
 
 export const routes = {
   home: { en: '/', es: '/inicio/' },
-  projects: { en: '/projects/', es: '/proyectos/' },
+  experience: { en: '/experience/', es: '/experiencia/' },
   contact: { en: '/contact/', es: '/contacto/' },
   freelancing: { en: '/freelancing/', es: '/freelance/' },
   log: { en: '/log/', es: '/bitacora/' },

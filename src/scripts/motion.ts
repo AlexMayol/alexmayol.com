@@ -8,7 +8,6 @@ document.addEventListener('astro:before-swap', () => io?.disconnect());
 document.addEventListener('astro:page-load', () => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   initReveal();
-  initTilt();
 });
 
 // Pre-hides [data-reveal] and [data-stagger] children, then plays the CSS
@@ -37,19 +36,5 @@ function initReveal() {
   targets.forEach((el) => {
     el.classList.add('will-reveal');
     io!.observe(el);
-  });
-}
-
-function initTilt() {
-  document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
-    card.addEventListener('pointermove', (e) => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `perspective(800px) rotateY(${x * 10}deg) rotateX(${y * -10}deg) translateZ(4px)`;
-    });
-    card.addEventListener('pointerleave', () => {
-      card.style.transform = '';
-    });
   });
 }

@@ -10,6 +10,13 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = ui[lang];
+
+const cards = [
+  { href: routes.experience[lang], title: t.nav.experience, blurb: t.experience.intro },
+  { href: routes.freelancing[lang], title: t.nav.freelancing, blurb: t.freelancing.intro },
+  { href: routes.log[lang], title: t.nav.log, blurb: t.log.intro },
+  { href: routes.contact[lang], title: t.nav.contact, blurb: t.meta.contact.description },
+];
 ---
 
 <Base
@@ -19,8 +26,34 @@ const t = ui[lang];
   alternate={routes.home}
   jsonLd={personJsonLd}
 >
-  <section class="mx-auto grid min-h-[70dvh] max-w-3xl place-content-center px-6 text-center">
-    <h1 class="font-display text-5xl font-semibold tracking-tight sm:text-6xl">{SITE.displayName}</h1>
-    <p class="mt-4 text-lg text-accent">{t.home.tagline}</p>
+  <section class="mx-auto max-w-3xl px-6 py-16 sm:py-24">
+    <div class="text-center">
+      <h1 class="font-display text-5xl font-semibold tracking-tight sm:text-6xl">{SITE.displayName}</h1>
+      <p class="mt-4 text-lg text-accent">{t.home.tagline}</p>
+    </div>
+
+    <div data-stagger class="mt-16 grid gap-6 sm:grid-cols-2">
+      {
+        cards.map(({ href, title, blurb }) => (
+          <a
+            href={href}
+            class="group rounded-2xl border border-ink/10 bg-white/60 p-8 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
+          >
+            <h2 class="font-display text-2xl font-semibold transition-colors group-hover:text-accent">{title}</h2>
+            <p class="mt-2 text-ink/70">{blurb}</p>
+            <span
+              class="mt-4 inline-block text-sm font-semibold text-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          </a>
+        ))
+      }
+    </div>
   </section>
 </Base>
+
+<script>
+  import '../../scripts/motion';
+</script>
