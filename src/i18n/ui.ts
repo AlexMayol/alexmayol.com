@@ -44,6 +44,8 @@ export const ui = {
       github: 'Code, experiments and open source.',
       linkedin: 'Career, experience and professional chat.',
       email: 'The direct line.',
+      mailSubject: 'Hello from your site',
+      mailBody: 'Hi Alejandro,\n\n',
     },
     freelancing: {
       heading: 'Freelancing',
@@ -106,6 +108,8 @@ export const ui = {
       github: 'Código, experimentos y open source.',
       linkedin: 'Trayectoria, experiencia y charla profesional.',
       email: 'La línea directa.',
+      mailSubject: 'Hola desde tu web',
+      mailBody: 'Hola Alejandro,\n\n',
     },
     freelancing: {
       heading: 'Freelance',

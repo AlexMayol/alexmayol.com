@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageGlyph from '../PageGlyph.astro';
 import { routes, type Lang } from '../../i18n/routes';
 import { ui } from '../../i18n/ui';
-import { SITE, personJsonLd } from '../../data/site';
+import { personJsonLd } from '../../data/site';
 
 interface Props {
   lang: Lang;
@@ -28,13 +28,12 @@ const cards = [
   jsonLd={personJsonLd}
 >
   <div class="relative isolate">
-    <PageGlyph char="AM" corner="tl" />
+    <PageGlyph char="AM" corner="tr" />
     <section class="mx-auto max-w-3xl px-6 py-16 sm:py-24">
       <div class="text-center">
         <h1 class="font-display text-5xl font-semibold tracking-tight sm:text-6xl">
-          {SITE.displayName}<span class="text-accent">.</span>
+          {t.home.tagline}<span class="text-accent">.</span>
         </h1>
-        <p class="mt-4 text-lg text-accent">{t.home.tagline}</p>
       </div>
 
       <div data-stagger class="mt-16 grid gap-6 sm:grid-cols-2">
@@ -47,7 +46,7 @@ const cards = [
               <h2 class="font-display text-2xl font-semibold transition-colors group-hover:text-accent">{title}</h2>
               <p class="mt-2 text-ink/70">{blurb}</p>
               <span
-                class="mt-4 inline-block text-sm font-semibold text-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                class="mt-4 inline-block text-sm font-semibold text-accent sm:opacity-0 sm:transition-opacity sm:duration-300 sm:group-hover:opacity-100"
                 aria-hidden="true"
               >
                 →

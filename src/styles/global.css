@@ -119,20 +119,20 @@
   }
 }
 .page-glyph--tl {
-  top: -0.18em;
-  left: -0.16em;
+  top: 0;
+  left: -0.08em;
 }
 .page-glyph--tr {
-  top: -0.18em;
-  right: -0.16em;
+  top: 0;
+  right: 0.12em;
 }
 .page-glyph--bl {
   top: 32%;
-  left: -0.18em;
+  left: -0.08em;
 }
 .page-glyph--br {
   bottom: -0.2em;
-  right: -0.16em;
+  right: 0.12em;
 }
 
 /* Log listing covers fade up from a slight scale when their row reveals. */
@@ -278,6 +278,26 @@ html[data-vt='post-exit']::view-transition-old(main) {
 }
 html[data-vt='post-exit']::view-transition-new(main) {
   animation: vtFadeIn 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+
+/* Language toggle: same place, other words — dissolve, don't slide. */
+html[data-vt='lang']::view-transition-old(main) {
+  animation: vtLangOut 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+html[data-vt='lang']::view-transition-new(main) {
+  animation: vtLangIn 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+@keyframes vtLangOut {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+@keyframes vtLangIn {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
 }
 @keyframes vtZoomFadeIn {
   from {

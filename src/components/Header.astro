@@ -19,38 +19,73 @@ const links = [
   [routes.log[lang], t.log],
   [routes.contact[lang], t.contact],
 ] as const;
+
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const home = routes.home[lang];
+const isCurrent = (href: string) =>
+  href === home ? path === href : path.startsWith(href);
+const linkClass = (href: string) =>
+  isCurrent(href) ? 'text-accent' : 'hover:text-accent';
+const langClass =
+  'inline-flex min-h-11 min-w-11 items-center justify-center rounded border border-ink/20 px-3 text-sm font-semibold tracking-wide uppercase hover:border-accent hover:text-accent';
 ---
 
 <header transition:name="header" class="sticky top-0 z-10 border-b border-ink/10 bg-paper/90 backdrop-blur">
   <nav class="mx-auto flex max-w-3xl items-center justify-between gap-4 px-6 py-4" aria-label="Main">
-    <a href={routes.home[lang]} class="font-display text-lg font-semibold">{SITE.displayName}</a>
+    <a
+      href={home}
+      class:list={['font-display text-lg font-semibold', isCurrent(home) && 'text-accent']}
+      aria-current={isCurrent(home) ? 'page' : undefined}
+    >{SITE.displayName}</a>
 
     <div class="hidden items-center gap-5 text-sm sm:flex">
-      {links.map(([href, label]) => <a href={href} class="hover:text-accent">{label}</a>)}
-      <a
-        href={alternate[other]}
-        class="rounded border border-ink/20 px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:border-accent hover:text-accent"
-        aria-label={toggleLabel}
-      >{other}</a>
+      {
+        links.map(([href, label]) => (
+          <a href={href} class={linkClass(href)} aria-current={isCurrent(href) ? 'page' : undefined}>
+            {label}
+          </a>
+        ))
+      }
+      <a href={alternate[other]} class={langClass} aria-label={toggleLabel}>{other}</a>
     </div>
 
     <div class="flex items-center gap-3 sm:hidden">
-      <a
-        href={alternate[other]}
-        class="rounded border border-ink/20 px-2 py-1 text-xs font-semibold uppercase tracking-wide"
-        aria-label={toggleLabel}
-      >{other}</a>
-      <button popovertarget="mobile-menu" aria-label={t.menu} class="-m-2 cursor-pointer p-2">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg
-        >
+      <a href={alternate[other]} class={langClass} aria-label={toggleLabel}>{other}</a>
+      <button
+        popovertarget="mobile-menu"
+        data-menu-btn
+        aria-label={t.menu}
+        aria-expanded="false"
+        class="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center"
+      >
+        <span class="t-icon-swap" data-state="a" aria-hidden="true">
+          <svg
+            class="t-icon"
+            data-icon="a"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+          <svg
+            class="t-icon"
+            data-icon="b"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </span>
       </button>
     </div>
 
@@ -61,7 +96,14 @@ const links = [
     >
       {
         links.map(([href, label]) => (
-          <a href={href} class="block rounded-lg px-4 py-3 text-base hover:bg-accent/10 hover:text-accent">
+          <a
+            href={href}
+            class:list={[
+              'block rounded-lg px-4 py-3 text-base hover:bg-accent/10 hover:text-accent',
+              isCurrent(href) && 'text-accent',
+            ]}
+            aria-current={isCurrent(href) ? 'page' : undefined}
+          >
             {label}
           </a>
         ))
@@ -69,3 +111,24 @@ const links = [
     </div>
   </nav>
 </header>
+
+<script>
+  const closeMenu = () => document.getElementById('mobile-menu')?.hidePopover();
+
+  document.addEventListener('astro:before-swap', closeMenu);
+
+  document.addEventListener('astro:page-load', () => {
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+    if (!menu || !btn) return;
+    const swap = btn.querySelector<HTMLElement>('.t-icon-swap');
+    const sync = () => {
+      const open = menu.matches(':popover-open');
+      btn.setAttribute('aria-expanded', String(open));
+      if (swap) swap.dataset.state = open ? 'b' : 'a';
+    };
+    menu.addEventListener('toggle', sync);
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+    sync();
+  });
+</script>

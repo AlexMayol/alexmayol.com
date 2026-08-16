@@ -5,7 +5,8 @@ import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import type { Lang } from '../../i18n/routes';
 import { SITE } from '../../data/site';
-import { findTranslation, formatDate, postUrl, type Post } from '../../lib/posts';
+import { ui } from '../../i18n/ui';
+import { findTranslation, formatDate, postUrl, readingTime, type Post } from '../../lib/posts';
 
 interface Props {
   post: Post;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const { post, lang } = Astro.props;
+const t = ui[lang];
 const all = await getCollection('log', (p) => (import.meta.env.PROD ? !p.data.draft : true));
 // Pairs are already asserted by getPosts in prod; in dev an unpaired draft
 // falls back to itself so the language toggle still renders.
@@ -45,12 +47,13 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <article class="mx-auto max-w-3xl px-6 py-16">
-    <p
-      data-vt-morph
-      style={`--vt-name: post-date-${post.data.translationKey}`}
-      class="text-sm tracking-wide text-ink/65 uppercase"
-    >
-      {formatDate(post, lang)}
+    <p class="text-sm tracking-wide text-ink/65 uppercase">
+      <span data-vt-morph style={`--vt-name: post-date-${post.data.translationKey}`}>
+        {formatDate(post, lang)}
+      </span>
+      <span data-vt-morph style={`--vt-name: post-read-${post.data.translationKey}`}>
+        {' '}· {readingTime(post)} {t.log.minRead}
+      </span>
     </p>
     <h1
       data-vt-morph

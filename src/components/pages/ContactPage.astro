@@ -12,6 +12,13 @@ interface Props {
 const { lang } = Astro.props;
 const t = ui[lang];
 const [emailUser, emailDomain] = SITE.email.split('@');
+const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent(t.contact.mailSubject)}&body=${encodeURIComponent(t.contact.mailBody)}`;
+const gmail = new URL('https://mail.google.com/mail/');
+gmail.searchParams.set('view', 'cm');
+gmail.searchParams.set('fs', '1');
+gmail.searchParams.set('to', SITE.email);
+gmail.searchParams.set('su', t.contact.mailSubject);
+gmail.searchParams.set('body', t.contact.mailBody);
 
 const cards = [
   {
@@ -19,18 +26,22 @@ const cards = [
     handle: SOCIALS.githubHandle,
     href: SOCIALS.github,
     blurb: t.contact.github,
+    me: true,
   },
   {
     label: 'LinkedIn',
     handle: SITE.name,
     href: SOCIALS.linkedin,
     blurb: t.contact.linkedin,
+    me: true,
   },
   {
     label: 'Email',
     handle: SITE.email,
-    href: `mailto:${SITE.email}`,
+    href: mailto,
+    desktopHref: gmail.href,
     blurb: t.contact.email,
+    mail: true,
   },
 ];
 ---
@@ -54,12 +65,14 @@ const cards = [
         {cards.map((card) => (
           <a
             href={card.href}
-            rel={card.href.startsWith('http') ? 'me noopener' : undefined}
+            target="_blank"
+            rel={card.me ? 'me noopener' : 'noopener'}
+            data-desktop-href={card.desktopHref}
             class="group block rounded-xl border border-ink/10 bg-white/60 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
           >
             <p class="text-sm tracking-wide text-ink/65 uppercase">{card.label}</p>
             <p class="mt-2 font-display text-xl font-semibold break-words group-hover:text-accent">
-              {card.href.startsWith('mailto:') ? (
+              {card.mail ? (
                 <>
                   {emailUser}<wbr />@{emailDomain}
                 </>
