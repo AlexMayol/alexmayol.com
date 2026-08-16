@@ -21,8 +21,16 @@ const posts = await getPosts(lang);
   alternate={routes.log}
 >
   <section class="mx-auto max-w-3xl px-6 py-16">
-    <h1 class="font-display text-5xl font-semibold tracking-tight">{t.log.heading}</h1>
-    <p class="mt-4 max-w-xl text-lg text-ink/70">{t.log.intro}</p>
+    <h1
+      data-vt-morph
+      style="--vt-name: section-title-log"
+      class="font-display text-5xl font-semibold tracking-tight"
+    >
+      {t.log.heading}
+    </h1>
+    <p data-vt-morph style="--vt-name: section-blurb-log" class="mt-4 max-w-xl text-lg text-ink/70">
+      {t.log.intro}
+    </p>
 
     {posts.length === 0 && <p class="mt-14 text-ink/65">{t.log.empty}</p>}
 

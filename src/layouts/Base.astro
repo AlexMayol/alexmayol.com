@@ -99,18 +99,23 @@ const abs = (path: string) => new URL(path, Astro.site).href;
       const order = (path: string) =>
         prefixes.find(([prefix]) => norm(path).startsWith(prefix))?.[1] ?? 0;
 
-      // Post pages zoom+fade instead of sliding, and post titles morph:
-      // both documents get tagged with data-vt so the html[data-vt=…] rules
-      // in global.css out-specify the slide on main and name the titles.
+      // Drill-down navigations (listing → post, home → section) zoom+fade
+      // instead of sliding, and shared texts morph: both documents get tagged
+      // with data-vt so the html[data-vt=…] rules in global.css out-specify
+      // the slide on main and name the morphing elements.
       const postPrefixes = [routes.log.en, routes.log.es];
       const isPost = (path: string) => {
         const p = norm(path);
         return postPrefixes.some((prefix) => p.startsWith(prefix) && p.length > prefix.length);
       };
+      const isHome = (path: string) => {
+        const p = norm(path);
+        return p === routes.home.en || p === routes.home.es;
+      };
+      const depth = (path: string) => (isHome(path) ? 0 : isPost(path) ? 2 : 1);
       const vtKind = (fromPath: string, toPath: string) => {
-        const from = isPost(fromPath);
-        const to = isPost(toPath);
-        return to && !from ? 'post-enter' : from && !to ? 'post-exit' : undefined;
+        const d = depth(toPath) - depth(fromPath);
+        return d > 0 ? 'zoom-in' : d < 0 ? 'zoom-out' : undefined;
       };
       const tag = (root: HTMLElement, kind: string | undefined) => {
         if (kind) root.dataset.vt = kind;
