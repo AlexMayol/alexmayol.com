@@ -77,7 +77,7 @@ const abs = (path: string) => new URL(path, Astro.site).href;
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <ClientRouter />
   </head>
-  <body class="min-h-dvh bg-paper font-sans text-ink antialiased">
+  <body class="min-h-dvh overflow-x-clip bg-paper font-sans text-ink antialiased">
     <Header lang={lang} alternate={alternate} />
     <main transition:name="main" transition:animate={slide}><slot /></main>
     <script>

@@ -1,0 +1,15 @@
+---
+interface Props {
+  char: string;
+  corner: 'tl' | 'tr' | 'bl' | 'br';
+}
+
+const { char, corner } = Astro.props;
+---
+
+<span
+  class:list={['page-glyph', `page-glyph--${corner}`]}
+  data-float
+  transition:name="glyph"
+  aria-hidden="true">{char}</span
+>

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PageGlyph from '../PageGlyph.astro';
 import { routes, type Lang } from '../../i18n/routes';
 import { ui } from '../../i18n/ui';
 import { freelanceProjects } from '../../data/freelance';
@@ -19,40 +20,54 @@ const projects = freelanceProjects[lang];
   description={t.meta.freelancing.description}
   alternate={routes.freelancing}
 >
-  <section class="mx-auto max-w-3xl px-6 py-16">
-    <h1 class="font-display text-5xl font-semibold tracking-tight">{t.freelancing.heading}</h1>
-    <p class="mt-4 max-w-xl text-lg text-ink/70">{t.freelancing.intro}</p>
+  <div class="relative isolate">
+    <PageGlyph char="&" corner="br" />
+    <section class="mx-auto max-w-3xl px-6 py-16">
+      <h1 class="font-display text-5xl font-semibold tracking-tight">
+        {t.freelancing.heading}<span class="text-accent">.</span>
+      </h1>
+      <p class="mt-4 max-w-xl text-lg text-ink/70">{t.freelancing.intro}</p>
 
-    <div class="mt-14 space-y-8">
-      {projects.map((project) => (
-        <article data-reveal class="rounded-2xl border border-ink/10 bg-white/60 p-8 shadow-sm">
-          <p class="text-sm tracking-wide text-ink/65 uppercase">{project.tagline}</p>
-          <h2 class="mt-1 font-display text-3xl font-semibold">{project.name}</h2>
-          <p class="mt-3 text-ink/80">{project.description}</p>
-          <ul class="mt-4 flex flex-wrap gap-2">
-            {project.stack.map((s) => (
-              <li class="rounded-full border border-ink/15 px-3 py-0.5 text-xs text-ink/65">{s}</li>
-            ))}
-          </ul>
-          <p class="mt-6 flex gap-6 text-sm font-semibold">
-            <a href={project.site} rel="noopener" class="text-accent hover:underline">
-              {t.freelancing.visit} ↗
-            </a>
-          </p>
-        </article>
-      ))}
-    </div>
+      <div class="mt-14 space-y-8">
+        {projects.map((project) => (
+          <article data-reveal class="rounded-xl border border-ink/10 bg-white/60 p-8 shadow-sm">
+            <p class="text-sm tracking-wide text-ink/65 uppercase">{project.tagline}</p>
+            <h2 class="mt-1 font-display text-3xl font-semibold">{project.name}</h2>
+            <p class="mt-3 text-ink/80">{project.description}</p>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {project.stack.map((s) => (
+                <li class="rounded-full border border-ink/15 px-3 py-0.5 text-xs text-ink/65">{s}</li>
+              ))}
+            </ul>
+            <p class="mt-6 flex gap-6 text-sm font-semibold">
+              <a
+                href={project.site}
+                rel="noopener"
+                class="group/visit text-accent hover:underline"
+                data-icon-swap-hover
+              >
+                {t.freelancing.visit}{' '}
+                <span class="t-icon-swap" data-state="a">
+                  <span class="t-icon" data-icon="a">↗</span>
+                  <span class="t-icon" data-icon="b">→</span>
+                </span>
+              </a>
+            </p>
+          </article>
+        ))}
+      </div>
 
-    <aside data-reveal class="mt-16 rounded-2xl bg-ink px-8 py-10 text-center text-paper">
-      <p class="text-lg text-paper/80">{t.freelancing.ctaQuestion}</p>
-      <a
-        href={routes.contact[lang]}
-        class="mt-4 inline-block rounded-full bg-accent px-8 py-3 font-display text-xl font-semibold text-paper transition-transform duration-200 hover:scale-105"
-      >
-        {t.freelancing.cta} →
-      </a>
-    </aside>
-  </section>
+      <aside data-reveal class="mt-16 rounded-xl bg-ink px-8 py-10 text-center text-paper">
+        <p class="text-lg text-paper/80">{t.freelancing.ctaQuestion}</p>
+        <a
+          href={routes.contact[lang]}
+          class="mt-4 inline-block rounded-full bg-accent px-8 py-3 font-display text-xl font-semibold text-paper transition-transform duration-200 hover:scale-105"
+        >
+          {t.freelancing.cta} →
+        </a>
+      </aside>
+    </section>
+  </div>
 </Base>
 
 <script>
