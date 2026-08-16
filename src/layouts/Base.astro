@@ -117,6 +117,22 @@ const abs = (path: string) => new URL(path, Astro.site).href;
         else delete root.dataset.vt;
       };
 
+      // Clicking a link to the page you're already on shouldn't navigate or
+      // animate. Capture-phase so it runs before the ClientRouter's handler
+      // (cancelling astro:before-preparation instead would force a full page
+      // load).
+      document.addEventListener(
+        'click',
+        (e) => {
+          if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+            return;
+          const a = (e.target as Element).closest?.('a[href]') as HTMLAnchorElement | null;
+          if (!a || a.origin !== location.origin || a.hash) return;
+          if (norm(a.pathname) === norm(location.pathname)) e.preventDefault();
+        },
+        true
+      );
+
       document.addEventListener('astro:before-preparation', (event) => {
         const e = event as TransitionBeforePreparationEvent;
         e.direction = order(e.to.pathname) < order(e.from.pathname) ? 'back' : 'forward';

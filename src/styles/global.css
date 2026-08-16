@@ -105,6 +105,12 @@ html[data-vt] [data-vt-morph] {
   view-transition-name: var(--vt-name);
 }
 
+/* The header is its own (static) view-transition group, lifted above main's
+   group so the vertical mobile slide passes underneath it instead of over. */
+::view-transition-group(header) {
+  z-index: 1;
+}
+
 html[data-vt='post-enter']::view-transition-old(main) {
   animation: vtFadeOut 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
 }
