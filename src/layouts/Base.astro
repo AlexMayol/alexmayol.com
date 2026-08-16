@@ -52,7 +52,7 @@ const abs = (path: string) => new URL(path, Astro.site).href;
 <html lang={lang} class="scrollbar-gutter-stable">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -77,7 +77,7 @@ const abs = (path: string) => new URL(path, Astro.site).href;
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <ClientRouter />
   </head>
-  <body class="min-h-dvh bg-paper font-sans text-ink antialiased">
+  <body class="min-h-dvh overflow-x-clip bg-paper pb-[env(safe-area-inset-bottom)] font-sans text-ink antialiased">
     <Header lang={lang} alternate={alternate} />
     <main transition:name="main" transition:animate={slide}><slot /></main>
     <script>
@@ -110,7 +110,11 @@ const abs = (path: string) => new URL(path, Astro.site).href;
       const vtKind = (fromPath: string, toPath: string) => {
         const from = isPost(fromPath);
         const to = isPost(toPath);
-        return to && !from ? 'post-enter' : from && !to ? 'post-exit' : undefined;
+        if (to && !from) return 'post-enter';
+        if (from && !to) return 'post-exit';
+        // Same section, other language: stay put and cross-fade the words.
+        if (order(fromPath) === order(toPath) && norm(fromPath) !== norm(toPath)) return 'lang';
+        return undefined;
       };
       const tag = (root: HTMLElement, kind: string | undefined) => {
         if (kind) root.dataset.vt = kind;

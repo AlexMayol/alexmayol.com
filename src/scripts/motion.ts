@@ -6,9 +6,27 @@ let io: IntersectionObserver | undefined;
 document.addEventListener('astro:before-swap', () => io?.disconnect());
 
 document.addEventListener('astro:page-load', () => {
+  initMailHref();
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   initReveal();
 });
+
+// Phones get mailto (native Mail / Gmail app). Desktop keeps the Gmail
+// compose tab. Stored on [data-desktop-href]; the href itself is mailto.
+function initMailHref() {
+  const mq = window.matchMedia('(min-width: 640px)');
+  const apply = () => {
+    document.querySelectorAll<HTMLAnchorElement>('a[data-desktop-href]').forEach((a) => {
+      const desktop = a.dataset.desktopHref;
+      const mobile = a.dataset.mobileHref ?? a.getAttribute('href');
+      if (!desktop || !mobile) return;
+      if (!a.dataset.mobileHref) a.dataset.mobileHref = mobile;
+      a.href = mq.matches ? desktop : a.dataset.mobileHref;
+    });
+  };
+  apply();
+  mq.addEventListener('change', apply);
+}
 
 // Pre-hides [data-reveal] and [data-stagger] children, then plays the CSS
 // `rise` animation (see global.css) when they scroll into view. Content stays

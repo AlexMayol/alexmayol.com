@@ -7,6 +7,71 @@
   --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
 }
 
+/* transitions-dev — copy this :root block into your project once.
+   Every transition snippet reads from these semantic names. */
+:root {
+  /* Card resize */
+  --resize-dur: 300ms;
+  --resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Number pop-in */
+  --digit-dur: 500ms;
+  --digit-distance: 8px;
+  --digit-stagger: 70ms;
+  --digit-blur: 2px;
+  --digit-ease: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --digit-dir-x: 0;
+  --digit-dir-y: 1;
+  /* Notification badge */
+  --badge-slide-dur: 260ms;
+  --badge-pop-dur: 500ms;
+  --badge-pop-close-dur: 180ms;
+  --badge-fade-dur: 400ms;
+  --badge-fade-close-dur: 180ms;
+  --badge-blur: 2px;
+  --badge-offset-x: -8.2px;
+  --badge-offset-y: 12.4px;
+  --badge-slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --badge-pop-ease: cubic-bezier(0.34, 1.36, 0.64, 1);
+  --badge-close-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Text states swap */
+  --text-swap-dur: 200ms;
+  --text-swap-translate-y: 8px;
+  --text-swap-blur: 2px;
+  --text-swap-ease: ease-out;
+  /* Menu dropdown */
+  --dropdown-open-dur: 250ms;
+  --dropdown-close-dur: 150ms;
+  --dropdown-pre-scale: 0.97;
+  --dropdown-closing-scale: 0.99;
+  --dropdown-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Modal open / close */
+  --modal-open-dur: 250ms;
+  --modal-close-dur: 150ms;
+  --modal-scale: 0.96;
+  --modal-scale-close: 0.96;
+  --modal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Panel reveal */
+  --panel-open-dur: 400ms;
+  --panel-close-dur: 350ms;
+  --panel-translate-y: 100px;
+  --panel-blur: 2px;
+  --panel-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Page side-by-side */
+  --page-slide-dur: 200ms;
+  --page-fade-dur: 200ms;
+  --page-slide-distance: 8px;
+  --page-blur: 3px;
+  --page-stagger: 0ms;
+  --page-exit-enabled: 1;
+  --page-slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --page-fade-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Icon swap */
+  --icon-swap-dur: 200ms;
+  --icon-swap-blur: 2px;
+  --icon-swap-start-scale: 0.25;
+  --icon-swap-ease: ease-in-out;
+}
+
 /* Scroll reveal (driven by scripts/motion.ts). `.will-reveal` is only ever
    added by JS, so content stays visible without it. The animation has no
    forwards fill: once it ends, inline transforms (card tilt) work again. */
@@ -32,6 +97,96 @@
   to {
     transform: translateY(-14px) rotate(4deg);
   }
+}
+
+/* Page glyphs: cropped Fraunces watermarks, one per section. Absolute so
+   they overflow the page; body overflow-x-clip keeps the bleed off-canvas. */
+.page-glyph {
+  position: absolute;
+  z-index: -1;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12rem;
+  line-height: 0.75;
+  letter-spacing: -0.05em;
+  color: color-mix(in oklab, var(--color-accent) 7%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+@media (min-width: 640px) {
+  .page-glyph {
+    font-size: 20rem;
+  }
+}
+.page-glyph--tl {
+  top: 0;
+  left: -0.08em;
+}
+.page-glyph--tr {
+  top: 0;
+  right: 0.12em;
+}
+.page-glyph--bl {
+  top: 32%;
+  left: -0.08em;
+}
+.page-glyph--br {
+  bottom: -0.2em;
+  right: 0.12em;
+}
+
+/* Log listing covers fade up from a slight scale when their row reveals. */
+.is-in .log-cover {
+  animation: coverIn 0.7s cubic-bezier(0.33, 1, 0.68, 1) backwards;
+}
+@keyframes coverIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+.t-icon-swap {
+  position: relative;
+  display: inline-grid;
+}
+.t-icon-swap .t-icon {
+  grid-area: 1 / 1;
+  transition:
+    opacity   var(--icon-swap-dur) var(--icon-swap-ease),
+    filter    var(--icon-swap-dur) var(--icon-swap-ease),
+    transform var(--icon-swap-dur) var(--icon-swap-ease);
+  will-change: opacity, filter, transform;
+}
+.t-icon-swap[data-state="a"] .t-icon[data-icon="a"],
+.t-icon-swap[data-state="b"] .t-icon[data-icon="b"] {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+.t-icon-swap[data-state="a"] .t-icon[data-icon="b"],
+.t-icon-swap[data-state="b"] .t-icon[data-icon="a"] {
+  opacity: 0;
+  filter: blur(var(--icon-swap-blur));
+  transform: scale(var(--icon-swap-start-scale));
+}
+
+@media (hover: hover) {
+  [data-icon-swap-hover]:hover .t-icon-swap[data-state="a"] .t-icon[data-icon="a"] {
+    opacity: 0;
+    filter: blur(var(--icon-swap-blur));
+    transform: scale(var(--icon-swap-start-scale));
+  }
+  [data-icon-swap-hover]:hover .t-icon-swap[data-state="a"] .t-icon[data-icon="b"] {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-icon-swap .t-icon { transition: none !important; }
+  .is-in .log-cover { animation: none; }
 }
 
 /* View-transition slide keyframes (referenced from Base.astro's
@@ -107,7 +262,8 @@ html[data-vt] [data-vt-morph] {
 
 /* The header is its own (static) view-transition group, lifted above main's
    group so the vertical mobile slide passes underneath it instead of over. */
-::view-transition-group(header) {
+::view-transition-group(header),
+::view-transition-group(glyph) {
   z-index: 1;
 }
 
@@ -122,6 +278,26 @@ html[data-vt='post-exit']::view-transition-old(main) {
 }
 html[data-vt='post-exit']::view-transition-new(main) {
   animation: vtFadeIn 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+
+/* Language toggle: same place, other words — dissolve, don't slide. */
+html[data-vt='lang']::view-transition-old(main) {
+  animation: vtLangOut 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+html[data-vt='lang']::view-transition-new(main) {
+  animation: vtLangIn 400ms cubic-bezier(0.37, 0, 0.63, 1) both;
+}
+@keyframes vtLangOut {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+@keyframes vtLangIn {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
 }
 @keyframes vtZoomFadeIn {
   from {
