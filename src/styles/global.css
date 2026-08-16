@@ -67,6 +67,33 @@
   }
 }
 
+/* Below sm the nav is a vertical popover menu, so the slide runs vertically:
+   forward = new page in from the bottom, back = in from the top. Same
+   keyframe names — these override the horizontal ones while the media
+   query matches. */
+@media (width < 640px) {
+  @keyframes vtSlideToLeft {
+    to {
+      transform: translateY(-100%);
+    }
+  }
+  @keyframes vtSlideFromRight {
+    from {
+      transform: translateY(100%);
+    }
+  }
+  @keyframes vtSlideToRight {
+    to {
+      transform: translateY(100%);
+    }
+  }
+  @keyframes vtSlideFromLeft {
+    from {
+      transform: translateY(-100%);
+    }
+  }
+}
+
 /* Navigations into/out of a blog post zoom+fade instead of sliding. The
    data-vt attribute is set per-navigation in Base.astro's script; the html
    prefix out-specifies the generated slide rules on main. Post titles morph
