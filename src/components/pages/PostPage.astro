@@ -24,6 +24,7 @@ const alternate =
     ? { en: postUrl(post), es: postUrl(pair) }
     : { en: postUrl(pair), es: postUrl(post) };
 const { Content } = await render(post);
+const hasMedia = Boolean(post.data.cover || post.data.coverVideo);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -47,63 +48,74 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <article class="mx-auto max-w-3xl px-6 py-16">
-    <p class="text-sm tracking-wide text-ink/65 uppercase">
-      <span data-vt-morph style={`--vt-name: post-date-${post.data.translationKey}`}>
-        {formatDate(post, lang)}
-      </span>
-      <span data-vt-morph style={`--vt-name: post-read-${post.data.translationKey}`}>
-        {' '}· {readingTime(post)} {t.log.minRead}
-      </span>
-    </p>
-    <h1
-      data-vt-morph
-      style={`--vt-name: post-title-${post.data.translationKey}`}
-      class="mt-2 font-display text-4xl font-semibold tracking-tight sm:text-5xl"
-    >
-      {post.data.title}
-    </h1>
-    {
-      post.data.tags.length > 0 && (
+    <header class={hasMedia ? 'flex items-start justify-between gap-5 sm:gap-8' : undefined}>
+      <div class="min-w-0">
+        <p class="text-sm tracking-wide text-ink/65 uppercase">
+          <span data-vt-morph style={`--vt-name: post-date-${post.data.translationKey}`}>
+            {formatDate(post, lang)}
+          </span>
+          <span data-vt-morph style={`--vt-name: post-read-${post.data.translationKey}`}>
+            {' '}· {readingTime(post)} {t.log.minRead}
+          </span>
+        </p>
+        <h1
+          data-vt-morph
+          style={`--vt-name: post-title-${post.data.translationKey}`}
+          class="mt-2 font-display text-4xl font-semibold tracking-tight sm:text-5xl"
+        >
+          {post.data.title}
+        </h1>
         <p
           data-vt-morph
-          style={`--vt-name: post-tags-${post.data.translationKey}`}
-          class="mt-3 flex flex-wrap gap-x-3 text-sm text-accent"
+          style={`--vt-name: post-desc-${post.data.translationKey}`}
+          class="mt-3 text-lg text-ink/70"
         >
-          {post.data.tags.map((tag) => (
-            <span>#{tag}</span>
-          ))}
+          {post.data.description}
         </p>
-      )
-    }
-    {
-      post.data.cover && (
-        <Image
-          src={post.data.cover}
-          alt={post.data.coverAlt}
-          widths={[768, 1536]}
-          sizes="(min-width: 768px) 768px, 100vw"
-          class="mt-10 w-full rounded-2xl"
-          loading="eager"
-          fetchpriority="high"
-          data-vt-morph
-          style={`--vt-name: post-cover-${post.data.translationKey}`}
-        />
-      )
-    }
-    {
-      post.data.coverVideo && (
-        <video
-          src={post.data.coverVideo}
-          class="mt-10 w-full rounded-2xl"
-          autoplay
-          muted
-          loop
-          playsinline
-          data-vt-morph
-          style={`--vt-name: post-cover-${post.data.translationKey}`}
-        />
-      )
-    }
+        {
+          post.data.tags.length > 0 && (
+            <p
+              data-vt-morph
+              style={`--vt-name: post-tags-${post.data.translationKey}`}
+              class="mt-3 flex flex-wrap gap-x-3 text-sm text-accent"
+            >
+              {post.data.tags.map((tag) => (
+                <span>#{tag}</span>
+              ))}
+            </p>
+          )
+        }
+      </div>
+      {
+        post.data.cover && (
+          <Image
+            src={post.data.cover}
+            alt={post.data.coverAlt}
+            widths={[320, 640, 768]}
+            sizes="(min-width: 768px) 14rem, 10rem"
+            class="aspect-[3/2] w-40 shrink-0 rounded-xl object-cover sm:w-52 md:w-56"
+            loading="eager"
+            fetchpriority="high"
+            data-vt-morph
+            style={`--vt-name: post-cover-${post.data.translationKey}`}
+          />
+        )
+      }
+      {
+        post.data.coverVideo && (
+          <video
+            src={post.data.coverVideo}
+            class="aspect-[3/2] w-40 shrink-0 rounded-xl object-cover sm:w-52 md:w-56"
+            autoplay
+            muted
+            loop
+            playsinline
+            data-vt-morph
+            style={`--vt-name: post-cover-${post.data.translationKey}`}
+          />
+        )
+      }
+    </header>
     <div class="prose mt-10">
       <Content />
     </div>

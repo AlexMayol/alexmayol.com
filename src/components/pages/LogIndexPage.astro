@@ -78,7 +78,13 @@ const posts = await getPosts(lang);
                   >
                     {post.data.title}
                   </h2>
-                  <p class="mt-2 text-ink/70">{post.data.description}</p>
+                  <p
+                    data-vt-morph
+                    style={`--vt-name: post-desc-${post.data.translationKey}`}
+                    class="mt-2 text-ink/70"
+                  >
+                    {post.data.description}
+                  </p>
                   {post.data.tags.length > 0 && (
                     <p
                       data-vt-morph
