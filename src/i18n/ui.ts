@@ -60,6 +60,7 @@ export const ui = {
       intro: 'Writing on product engineering, experiences and learnings.',
       empty: 'Nothing here yet.',
       minRead: 'min read',
+      back: 'Back to log',
     },
   },
   es: {
@@ -123,6 +124,7 @@ export const ui = {
       intro: 'Escritos sobre ingeniería de producto, experiencias y aprendizajes.',
       empty: 'Aún no hay nada por aquí.',
       minRead: 'min de lectura',
+      back: 'Volver a la bitácora',
     },
   },
 } as const;
