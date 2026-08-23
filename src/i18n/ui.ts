@@ -62,6 +62,20 @@ export const ui = {
       minRead: 'min read',
       back: 'Back to log',
     },
+    footer: {
+      quips: [
+        'Works on my machine.',
+        'No review. Just vibes and a green checkmark.',
+        'This footer has 100% test coverage. Trust me.',
+        'No cookies. Just a mild sense of dread.',
+        'Shipped on a Friday. No regrets logged yet.',
+        'There is no changelog for this footer.',
+        'Zero dependencies. Also zero confidence.',
+        'Not A/B tested. You just got the only version.',
+        'Refactored three times. Says the same thing.',
+        'The PM has not validated this footer.',
+      ],
+    },
   },
   es: {
     nav: {
@@ -125,6 +139,20 @@ export const ui = {
       empty: 'Aún no hay nada por aquí.',
       minRead: 'min de lectura',
       back: 'Volver a la bitácora',
+    },
+    footer: {
+      quips: [
+        'Funciona en mi máquina.',
+        'Sin revisión. Solo vibes y un check en verde.',
+        'Este footer tiene 100% de cobertura de tests. Confía.',
+        'Sin cookies. Con una ligera sensación de vértigo.',
+        'Publicado en viernes. Aún sin incidencias reportadas.',
+        'Este footer no tiene changelog.',
+        'Cero dependencias. También cero confianza.',
+        'Sin A/B test. Solo hay una versión, y es esta.',
+        'Refactorizado tres veces. Dice lo mismo.',
+        'El PM aún no ha validado este footer.',
+      ],
     },
   },
 } as const;
