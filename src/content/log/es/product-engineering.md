@@ -37,8 +37,10 @@ Y seguro que me dejo muchos. Honestamente, hay mucho ruido que filtrar últimame
 
 Hasta ahora he hablado de cómo la IA ha cambiado mi forma de trabajar, pero merece la pena que explique qué considero yo ser un _Ingeniero de producto_, pues, como muchos otros términos en esta industria, puede que tenga diferente significado en función de la persona o empresa en la que te encuentres.
 
-- Métricas: se acabó el ship and forget, o, mejor dicho, el ship and que lo valide el PM.
-- La observabilidad
+- _Product first_: lo más importante (creo que siempre lo ha sido) es la calidad del producto final que entregas. Antes dedicábamos mucho tiempo a cuidar aspectos como la calidad, legibilidad y escalabilidad del código. Esos puntos siguen siendo muy importantes, pero ya no dependen tanto de nosotros: se los delegamos a agentes de IA. Nuestro tiempo pasa, ahora, a estar más ocupado en conversaciones sobre _qué_ construir, más que _cómo_ hacerlo.
+- Contexto: ahora que podemos abstraernos más del código y tenemos más tiempo para mirar de forma más panorámica aquello que construimos, veo que es extremadamente importante que nosotros pasemos a ser un _contexto andante_. Leyendo innumerables hilos de Slack, escuchando conversaciones entre _managers_ y probando nuestro producto continuamente conseguimos tener siempre información actualizada sobre en qué punto está el proyecto y hacia dónde va, por qué se tomaron ciertas decisiones arquitectónicas y en qué están trabajando el resto de equipos de la empresa. Esto permite dar un contexto mucho mejor a los agentes, guiándolos para que extraigan información de una PR específica o apunten a cierta conversación de Slack.
+- Métricas: se acabó el _ship and forget_, o, mejor dicho, el ship and que lo valide el PM. Ahora soy yo quien define qué significa que una _feature_ funcione, instrumento los eventos necesarios para medirlo y reviso los números días después de haberla lanzado. La métrica deja de ser un informe que me entregan y pasa a ser una herramienta de trabajo más.
+- La observabilidad: si soy responsable de que una _feature_ funcione en producción, necesito poder ver qué está pasando sin depender de que alguien más me avise. _Logs_, trazas y _dashboards_ dejan de ser cosa exclusiva del equipo de plataforma y pasan a formar parte del propio desarrollo: si no puedo observarlo, no lo he terminado de construir.
 
 ## _High agency_
 
