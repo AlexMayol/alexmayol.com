@@ -1,0 +1,24 @@
+---
+import { ui } from '../i18n/ui';
+import type { Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const quips = ui[lang].footer.quips;
+---
+
+<footer class="py-10 text-center">
+  <p data-footer-quip={JSON.stringify(quips)} class="text-xs text-ink/45">{quips[0]}</p>
+</footer>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const el = document.querySelector<HTMLElement>('[data-footer-quip]');
+    if (!el) return;
+    const quips: string[] = JSON.parse(el.dataset.footerQuip ?? '[]');
+    if (quips.length) el.textContent = quips[Math.floor(Math.random() * quips.length)];
+  });
+</script>
