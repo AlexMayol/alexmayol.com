@@ -54,6 +54,15 @@ const abs = (path: string) => new URL(path, Astro.site).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, viewport-fit=cover" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <noscript>
+      <style>
+        html.js [data-reveal],
+        html.js [data-stagger] > * {
+          opacity: 1;
+        }
+      </style>
+    </noscript>
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
