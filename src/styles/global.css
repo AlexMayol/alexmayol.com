@@ -72,14 +72,27 @@
   --icon-swap-ease: ease-in-out;
 }
 
-/* Scroll reveal (driven by scripts/motion.ts). `.will-reveal` is only ever
-   added by JS, so content stays visible without it. The animation has no
-   forwards fill: once it ends, inline transforms (card tilt) work again. */
+/* Scroll reveal (driven by scripts/motion.ts). `html.js` is set by a
+   parser-blocking head script, so first paint is already hidden — otherwise
+   content shows, then JS hides it, then `rise` plays (a blink). `.will-reveal`
+   is the JS-side twin for the observer swap. No forwards fill: once `rise`
+   ends, inline transforms (card tilt) work again. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal]:not(.is-in),
+  html.js [data-stagger] > :not(.is-in) {
+    opacity: 0;
+  }
+}
 .will-reveal {
   opacity: 0;
 }
 .is-in {
   animation: rise 0.7s cubic-bezier(0.33, 1, 0.68, 1) backwards;
+}
+/* ClientRouter-stamped reveals must be visible in the view-transition
+   snapshot and must not replay `rise` when the transition attribute drops. */
+.is-in.is-shown {
+  animation: none;
 }
 @keyframes rise {
   from {
@@ -139,6 +152,9 @@
 .is-in .log-cover {
   animation: coverIn 0.7s cubic-bezier(0.33, 1, 0.68, 1) backwards;
 }
+.is-in.is-shown .log-cover {
+  animation: none;
+}
 @keyframes coverIn {
   from {
     opacity: 0;
@@ -186,6 +202,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .t-icon-swap .t-icon { transition: none !important; }
+  .is-in { animation: none; }
   .is-in .log-cover { animation: none; }
 }
 

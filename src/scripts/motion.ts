@@ -1,14 +1,35 @@
 // Single dispatcher: pages just `import '../scripts/motion'`. The module runs
 // once ever (ClientRouter keeps it alive across navigations), so listeners are
 // registered here instead of per-page scripts.
-let io: IntersectionObserver | undefined;
+import type { TransitionBeforeSwapEvent } from 'astro:transitions/client';
 
-document.addEventListener('astro:before-swap', () => io?.disconnect());
+let io: IntersectionObserver | undefined;
+let firstLoad = true;
+
+document.addEventListener('astro:before-swap', (event) => {
+  io?.disconnect();
+  const next = (event as TransitionBeforeSwapEvent).newDocument;
+  // Persist the first-paint hook across ClientRouter's html-attribute swap.
+  next.documentElement.classList.add('js');
+  // Incoming reveals must be visible before the view-transition snapshot.
+  // `.is-shown` skips `rise` so they don't fade up after the slide.
+  if (!firstLoad) {
+    next.querySelectorAll<HTMLElement>('[data-reveal], [data-stagger] > *').forEach((el) => {
+      el.classList.add('is-in', 'is-shown');
+    });
+  }
+});
 
 document.addEventListener('astro:page-load', () => {
   initMailHref();
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  initReveal();
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    firstLoad = false;
+    return;
+  }
+  if (firstLoad) {
+    firstLoad = false;
+    initReveal();
+  }
 });
 
 // Phones get mailto (native Mail / Gmail app). Desktop keeps the Gmail
@@ -29,8 +50,10 @@ function initMailHref() {
 }
 
 // Pre-hides [data-reveal] and [data-stagger] children, then plays the CSS
-// `rise` animation (see global.css) when they scroll into view. Content stays
-// visible if this script never runs — the hidden state is only applied here.
+// `rise` animation (see global.css) when they scroll into view. First paint
+// is already hidden via `html.js` in Base.astro — this only runs on the
+// initial page-load. Later ClientRouter navigations stamp `.is-in` in
+// before-swap so the view-transition snapshot stays intact.
 function initReveal() {
   const targets = document.querySelectorAll<HTMLElement>('[data-reveal], [data-stagger] > *');
   if (!targets.length) return;
