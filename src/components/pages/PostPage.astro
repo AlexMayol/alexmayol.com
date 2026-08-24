@@ -48,7 +48,7 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <article class="mx-auto max-w-3xl px-6 py-16">
-    <header class={hasMedia ? 'flex items-start justify-between gap-5 sm:gap-8' : undefined}>
+    <header class={hasMedia ? 'flex flex-col gap-5' : undefined}>
       <div class="min-w-0">
         <a
           href={routes.log[lang]}
@@ -111,8 +111,8 @@ const jsonLd = {
             src={post.data.cover}
             alt={post.data.coverAlt}
             widths={[320, 640, 768]}
-            sizes="(min-width: 768px) 14rem, 10rem"
-            class="aspect-[3/2] w-40 shrink-0 rounded-xl object-cover sm:w-52 md:w-56"
+            sizes="(min-width: 48rem) 45rem, calc(100vw - 3rem)"
+            class="aspect-[3/2] w-full rounded-xl object-cover"
             loading="eager"
             fetchpriority="high"
             data-vt-morph
@@ -124,7 +124,7 @@ const jsonLd = {
         post.data.coverVideo && (
           <video
             src={post.data.coverVideo}
-            class="aspect-[3/2] w-40 shrink-0 rounded-xl object-cover sm:w-52 md:w-56"
+            class="aspect-[3/2] w-full rounded-xl object-cover"
             autoplay
             muted
             loop
